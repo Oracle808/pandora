@@ -10,7 +10,7 @@
 	<ul id="subjects-student">
 	  {#subjects}
 	    <li>
-	      <a href="/subjects/{_id}">
+	      <a href="/subjects/{_id}}">
 		<img src="/icons/{subject_name}.png"/>
 	      </a>
 	    </li>
@@ -21,7 +21,7 @@
 	  <li class="heading">
 	    Subjects
 	    {@eq key=user.role value="admin"}
-	      {>"views/add.dust" src="/subjects/new"/}
+	      {>"views/add.dust" src="/subjects/nova"/}
 	    {/eq}
 	  </li>
 	  {#subjects}
