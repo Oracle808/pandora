@@ -1,5 +1,6 @@
-Pandora: VLE
+The world's most advanced Virtual Learning Environment
 ===
+![Screenshot of the Home Page](https://raw.github.com/HashanP/WHSB/master/public/screenshots/homepage.png)
 
 For years upon years the British education sector has been served with substandard teachnology to do its job. The most abismal part of this fiasco is the millions wasted on cloud-based available-everywhere custom-per-school user-authenticated content management systems. *Prima Facie* it seems very innovative. After all the notion of *the cloud* is very new compared to that of a *computer*. It seems that schools are embracing forward using state-of-the-art technology to create a more interactive experience: settings homework online; putting revision materials online; making student resources available online. **However** in reality the virtual learning environment is clunky, inefficent, slow, verbose, etc. To actually view something you must download it. Donwloading requires *Java* or *Adobe Flash* that must be installed onto your computer to actually do something. There is no concept of extensibility. Metaphors such as that of *rooms* are poorly implemented. Some no names mentioned *cough* Fronter *cough* lack any concept of interactivity to make it worthwhile.  
 
