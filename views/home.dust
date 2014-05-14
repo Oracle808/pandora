@@ -21,7 +21,7 @@
 	  <li class="heading">
 	    Subjects
 	    {@eq key=user.role value="admin"}
-	      {>"views/add.dust" src="/subjects/new"/}
+	      {>"views/add.dust" src="/subjects/nova"/}
 	    {/eq}
 	  </li>
 	  {#subjects}

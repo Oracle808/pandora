@@ -3,7 +3,7 @@
 #students {
     @include mobile-list();
 
-    .unenroll-student {
+    .disenroll-student {
 	@extend .right;
 	@include button-style($purple);
     }

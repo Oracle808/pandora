@@ -22,7 +22,7 @@
       {#students}
 	<li>
 	  <a>{username}</a>
-	  {>"views/delete.dust" src="/subjects/{subject._id}/students/{_id}" text="Unenroll" class="unenroll-student"/}
+	  {>"views/delete.dust" src="/subjects/{subject._id}/students/{_id}" text="Disenroll" class="disenroll-student"/}
 	</li>
       {/students}
     </ul>
