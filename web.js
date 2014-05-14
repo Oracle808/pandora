@@ -86,7 +86,7 @@ app.del("/subjects/:subject/vocab_quizzes/:quiz", auth, teacher, loadSubject, Vo
 app.post("/subjects/:subject/links", auth, teacher, loadSubject, Subjects.links.post);
 app.del("/subjects/:subject/links/:link", auth, loadSubject, Subjects.links.del);
 app.get("/subjects/:subject/students", auth, teacher, loadSubject, Subjects.students.list);
-app.del("/subjects/:subject/students/:student", auth, teacher, loadSubject, Subjects.students.unenroll);
+app.del("/subjects/:subject/students/:student", auth, teacher, loadSubject, Subjects.students.disenroll);
 app.get("/subjects/:subject/settings", auth, teacher, loadSubject, Settings.list);
 app.post("/subjects/:subject/settings", auth, teacher, loadSubject, Settings.post);
 

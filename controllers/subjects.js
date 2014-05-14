@@ -85,7 +85,7 @@ exports.students.list = function(req, res) {
     });
 };
 
-exports.students.unenroll = function(req, res) {
+exports.students.disenroll = function(req, res) {
     db.users.findByIdAndUpdate(req.param("student"), {$pull: {subjects: req.subject._id}}, function(err, doc) {
 	if(err) {
 	    res.error(err);
