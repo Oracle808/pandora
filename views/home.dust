@@ -10,7 +10,7 @@
 	<ul id="subjects-student">
 	  {#subjects}
 	    <li>
-	      <a href="/subjects/{_id}}">
+	      <a href="/subjects/{_id}">
 		<img src="/icons/{subject_name}.png"/>
 	      </a>
 	    </li>
