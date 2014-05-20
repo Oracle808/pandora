@@ -2,10 +2,10 @@
   "name": "WHSB",
   "author": "Hashan Punchihewa <hashan.punchihewa@gmail.com>",
   "description": "A dependable, innovative, and exciting VLE for the 21st century",
-  "version": "0.0.1",
-  "main": "app/web.js",
+  "version": "0.0.2",
+  "main": "web.js",
   "country": "United Kingdom of Great Britain and Northern Ireland",
-  "language": "en-gb",
+  "language": "en-GB",
   "dependencies": {
     "mongoose": "3.8.4",
     "commander": "2.1.0",
