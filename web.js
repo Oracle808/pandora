@@ -23,13 +23,13 @@ app.use(serveStatic("public")); // Serve static files
 // *
 
 var loadSubject = function(req, res, next) {
-    db.subjects.findById(req.param("subject")).populate("teacher").exec(function(err, doc) {
-	if(err) {
-	    res.error(err);
-	} else {
-	    req.subject = res.locals.subject = doc;
-	    next();
-	}
+	db.subjects.findById(req.param("subject")).populate("teacher").exec(function(err, doc) {
+		if(err) {
+			res.error(err);
+		} else {
+			req.subject = res.locals.subject = doc;
+			next();
+		}
     });
 };
 
