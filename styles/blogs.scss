@@ -24,7 +24,7 @@ main > ul {
 main ul .heading .rss-link {
     @extend .right;
     @extend button;
-    @include button-style($purple);    
+    @include button-style($purple);
     @include button-size($button-tny);
     margin-right:5px;
 }
@@ -70,7 +70,7 @@ article .postMeta {
 
 article .postActions {
     & {
-	@include grid-column(2, $collapse: true, $float:right);
+	     @include grid-column(2, $collapse: true, $float:right);
     }
     a, button {
 	@include button-size($button-tny);

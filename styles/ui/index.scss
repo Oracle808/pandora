@@ -12,24 +12,24 @@
     font-size:1.05rem;
 
     .string {
-	color:#090;
+		color:#090;
     }
 
     .comment {
-	color:#a50;
+		color:#a50;
     }
 
     .parameter {
-	color:#219;
+		color:#219;
     }
 
     .keyword {
-	color:#708;
+		color:#708;
     }
 
     blockquote {
-	color:inherit;
-	line-height:inherit;
+		color:inherit;
+		line-height:inherit;
     }
 }
 
@@ -37,69 +37,228 @@
     @include grid-column(12, $collapse:true);
 
     .editor-toolbar {
-	border-top:1px solid #cccccc;
-	border-left:1px solid #cccccc;
-	border-right:1px solid #cccccc;
-	background-color:#e7e7e7;
+		border-top:1px solid #cccccc;
+		border-left:1px solid #cccccc;
+		border-right:1px solid #cccccc;
+		background-color:#e7e7e7;
     }
     .editor-toolbar ul {
-	@include button-group-container();
-	margin-right:10px;
-	display:inline-block;
+		@include button-group-container();
+		margin-right:10px;
+		display:inline-block;
     }
     .editor-toolbar ul button {
-	@include button($button-sml, $secondary-color);
+		@include button($button-sml, $secondary-color);
     }
     .editor-toolbar ul button.active {
-	background-color: darken($secondary-color, 15%);
+		background-color: darken($secondary-color, 15%);
     }
 
     .editor-toolbar {
-	@include grid-row();
-	height:37px;
+		@include grid-row();
+		height:37px;
     }
 
     .editor-toolbar .editor-formating {
-	@include grid-column(7, $collapse: true);
-	height:37px;
+		@include grid-column(7, $collapse: true);
+		height:37px;
     }
 
     select {
-	@include grid-column(2.5);
-	margin-bottom:0;
+		@include grid-column(2.5);
+		margin-bottom:0;
     }
 
     select.editor-mode {
-	@extend .right;
+		@extend .right;
     }
 
     .editor-preview {
-	text-align:center;
-	padding-bottom:20px;
-	border:1px solid #ccc;
+		text-align:center;
+		padding-bottom:20px;
+		border:1px solid #ccc;
     }
     .editor-views .editor-preview, .editor-views .editor-content:not(.editor-rich) {
-	display:none;
+		display:none;
     }
     .editor-views .editor-preview.active, .editor-views .editor-content.active {
-	display:block;
+		display:block;
     }
     .editor-content {
-	font-size:17px;
-	min-height:150px;
+		font-size:17px;
+		min-height:150px;
     }
     ul[role="tablist"] li {
-	float:left;
-	padding-left:5px;
-	padding-right:5px;
-	border-top:1px solid black;
-	border-left:1px solid black;
-	border-right:1px solid black;
-	height:37px;
-	margin-top:0px;
+		float:left;
+		padding-left:5px;
+		padding-right:5px;
+		border-top:1px solid black;
+		border-left:1px solid black;
+		border-right:1px solid black;
+		height:37px;
+		margin-top:0px;
     }
 
     ul[role="tablist"] li.active {
-	background-color:#aaa;
+		background-color:#aaa;
+    }
+}
+
+@mixin side-bar($background: $middleground) {
+	padding-top:$content-margin;
+    padding-bottom:$content-margin;
+	background-color:$background;
+
+    &, & ~ main {
+		transition: left 1s;
+    }
+
+    h4, form, ul li {
+		padding-left:$content-margin;
+		padding-right:$content-margin;
+    }
+
+    ul {
+		@include side-nav();
+    }
+
+
+    ul li:hover {
+		background-color:darken($background, 5%);
+    }
+
+    @media #{$small-only} {
+		@include grid-column(9);
+		
+		position:absolute;
+		left:-75%;
+		border-right:1px solid black;
+		height:100%;
+
+		ul {
+			@include side-nav($font-size:1.1rem);
+		}
+		
+		& ~ main {
+			position:relative;
+			left:0;
+		}
+		
+		&.active {
+			@include grid-column(9);
+			left:0;
+			overflow:auto;
+		}
+		
+		&.active ~ main {
+			left:75%;
+		}
+		
+		ul {
+			li {
+				padding:0.2rem 0.95rem;
+			}
+		}
+    }
+
+    @media #{$medium-up} {
+		& {
+			@include grid-column(3, $collapse: true);
+
+		}
+		& ~ main {
+			@include grid-column(9);
+		}
+
+		ul li {	    
+			padding-top:$minor-margin;
+			padding-bottom:$minor-margin;
+		}
+
+		ul li.header {
+			text-transform:uppercase;
+		}
+		ul li.active > a:first-child:not(.button) {
+			font-weight:bold;
+		}
+
+		#newLink {
+			@include button($full-width:true);
+		}
+		input {
+			margin-bottom:0;
+		}
+    }
+}
+
+@mixin mobile-list($bg: $foreground) {
+    list-style-type:none;
+    
+    > li {
+		@include grid-row();
+		background-color:$bg;
+		border-bottom:1px solid darken($bg, 10%);
+		padding:$minor-margin;
+
+		button {
+			@extend .left;
+		}
+		
+		button, .add-item, .delete-item, .edit-item {
+			@include button-size($button-tny);
+		}
+
+		.add-item, .delete-item, .edit-item {
+			@extend button;
+		}
+
+		.add-item, .delete-item, .edit-item, button[type="submit"], > input {
+			@extend .right;
+			margin-bottom:0;
+		}
+
+		> input[type="text"] {
+			@include grid-column(4);
+		}
+
+		.delete-item {
+			@include button-style($warning);
+		}
+
+		.edit-item {
+			@include button-style($purple);
+		}
+    }
+
+    form {
+		display:inline;
+    }
+
+    li.nothing, li.heading {
+		text-align:center;
+    }
+
+    li.heading, li.footer {
+		background-color:deepskyblue;
+		font-weight:bold;
+    }
+
+    li.nothing {
+		padding:$content-margin;
+    }
+
+    > li:last-child, li.heading {
+		border-bottom:none;
+    }
+
+    margin-left:0;
+
+    @media #{$medium-up} {
+		margin-top:$content-margin;
+    }
+
+    @media #{$small-only} {
+		margin-top:0;
+		margin-bottom:0;
     }
 }

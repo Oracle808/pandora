@@ -1,0 +1,23 @@
+{>"views/base.dust"/}
+{<head}
+  <title>Users</title>
+  <link href="/styles/users.css" rel="stylesheet"/>
+{/head}
+{<body}
+  {>"views/topbar.dust"/}
+  <main>
+	<ul id="users">
+	  <li class="heading">
+		Users 
+		{>"views/add.dust" src="/users/nova"/}
+		<a href="/users/mass_user_creation" class="mass-user-creation">Mass User Creation</a>
+	  </li>
+	  {#users}
+		<li>
+		  <a href="/users/{id}">{username}</a>
+		  {>"views/delete.dust" src="/users/{id}" class="delete-item"/}
+		</li>
+	  {/users}
+	</ul>
+  </main>
+{/body}

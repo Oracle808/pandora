@@ -1,7 +1,7 @@
 {>"views/base.dust"/}
 {<head}
     <title>Mass User Creation</title>
-    <link href="/styles/users.css" rel="stylesheet"/>
+    <link href="/styles/mass_user_creation.css" rel="stylesheet"/>
 {/head}
 {<body}
   {>"views/topbar.dust"/}

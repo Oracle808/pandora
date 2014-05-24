@@ -29,6 +29,9 @@
       <li><a href="/">Classes</a></li>
       <li><a href="/clubs">Clubs</a></li>
       <li><a href="/apps">Apps</a></li>
+	  {@eq key=user.role value="admin"}
+		<li><a href="/users">Users</a></li>
+	  {/eq}
     </ul>
   </section>
   </div>

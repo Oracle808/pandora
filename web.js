@@ -97,6 +97,7 @@ app.get("/subjects/:subject/hand_in/:hand_in_slot/files", auth, teacher, loadSub
 app.post("/subjects/:subject/hand_in/:hand_in_slot/files", auth, loadSubject, HandIn.upload);
 app.get("/subjects/:subject/hand_in/:hand_in_slot/files/:file", auth, HandIn.download);
 app.del("/subjects/:subject/hand_in/:hand_in_slot", auth, teacher, loadSubject, HandIn.del);
+
 // SUBJECT RECORDINGS
 app.get("/subjects/:subject/recordings", auth, loadSubject, Recordings.list);
 app.post("/subjects/:subject/recordings", auth, teacher, loadSubject, Recordings.post);
@@ -108,9 +109,10 @@ app.get("/apps", auth, Apps.index);
 app.get("/apps/codr", auth, Apps.codr);
 
 // USERS
-app.get("/users/massUserCreation", auth, admin, Users.massUserCreation);
-app.post("/users/massUserCreation", auth, admin, Users.postMassUserCreation);
+app.get("/users/mass_user_creation", auth, admin, Users.massUserCreation);
+app.post("/users/mass_user_creation", auth, admin, Users.postMassUserCreation);
 app.get("/users", auth, teacher, Users.list); // So teachers can add users
+app.del("/users/:user", auth, admin, Users.del);
 
 // Start
 app.listen(process.env.PORT);
