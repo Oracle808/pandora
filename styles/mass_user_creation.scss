@@ -11,10 +11,6 @@
     @include grid-column(6, $collapse:none);
 }
 
-select[multiple] {
-    height:auto !important;
-}
-
 #users table {
     @include grid-row(12);
 }

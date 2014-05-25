@@ -112,6 +112,8 @@ app.get("/apps/codr", auth, Apps.codr);
 app.get("/users/mass_user_creation", auth, admin, Users.massUserCreation);
 app.post("/users/mass_user_creation", auth, admin, Users.postMassUserCreation);
 app.get("/users", auth, teacher, Users.list); // So teachers can add users
+app.get("/users/nova", auth, admin, Users.nova);
+app.post("/users/nova", auth, admin, Users.post);
 app.del("/users/:user", auth, admin, Users.del);
 
 // Start

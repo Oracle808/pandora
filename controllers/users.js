@@ -1,4 +1,5 @@
 var listUsers = require("../views/users.dust");
+var novaUser = require("../views/new_user.dust");
 var massUserCreationTemplate = require("../views/mass_user_creation.dust");
 var mongoose = require("mongoose");
 var Subject = mongoose.model("Subject");
@@ -11,14 +12,16 @@ exports.list = function(req, res) {
 		query.role = req.query.role;
     }
     if(req.query.startsWith) {
-		query.username = new RegExp("$" + req.query.startsWith);
+//		query.username = new RegExp("$" + req.query.startsWith);
     }
+	console.log(query);
     User.find(query).limit(max).exec(function(err, docs) {
 		if(err) {
 			res.error(err);
 		} else {
 			res.format({
 				json: function() {
+					console.log(docs);
 					res.json(docs);
 				},
 				html: function() {
@@ -29,8 +32,44 @@ exports.list = function(req, res) {
     });
 };
 
+exports.nova = function(req, res) {
+	Subject.find({}, function(err, docs) { // Get a list of every single subject
+		if(err) {
+			res.error(err);
+		} else {
+			res.render(novaUser, {subjects: docs});
+		}
+	});
+};
+
+exports.post = function(req, res) {
+	var newbie = new User({
+		username: req.body.username,
+		password: req.body.username,
+		role: req.body.role
+	});
+	if(newbie.role === "student") {
+		newbie.subjects = req.body.subjects;
+	}
+	newbie.save(function(err) {
+		if(err) {
+			res.error(err);
+		} else if(req.body.role === "teacher") {
+			Subject.find({_id: {$in: [req.body.subjects]}}).update({$set: {teacher: newbie._id}}, function(err) {
+				if(err) {
+					res.error(err);
+				} else {
+					exports.list(req, res);
+				}
+			});
+		} else {
+			exports.list(req, res);
+		}
+	});
+};
+
 // Mass user creation form
-module.exports.massUserCreation = function(req, res) {
+exports.massUserCreation = function(req, res) {
     Subject.find({}, function(err, docs) {
 		if(err) {
 			res.error(err);

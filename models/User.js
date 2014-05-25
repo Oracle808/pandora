@@ -5,21 +5,21 @@ var SALT_WORK_FACTOR = 10;
 
 var User = mongoose.Schema({
     username: {
-	type: String,
-	required: true
+		type: String,
+		required: true
     },
     password: {
-	type: String,
-	required: true
+		type: String,
+		required: true
     },
     role: {
-	type: String,
-	required: true,
+		type: String,
+		required: true,
 	default: "student"
     },
     subjects: [{
-	type: ObjectId,
-	ref:"Subject"
+		type: ObjectId,
+		ref:"Subject"
     }]
 });
 

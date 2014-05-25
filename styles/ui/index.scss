@@ -3,6 +3,10 @@
 @import "public/components/foundation/scss/foundation";
 @import "public/components/foundation-icon-fonts/foundation-icons";
 
+select[multiple] {
+	height:auto !important;
+}
+
 [contenteditable] {
     @extend textarea;
 }
@@ -212,13 +216,9 @@
 			@extend button;
 		}
 
-		.add-item, .delete-item, .edit-item, button[type="submit"], > input {
+		.add-item, .delete-item, .edit-item, button[type="submit"], input[type="checkbox"] {
 			@extend .right;
 			margin-bottom:0;
-		}
-
-		> input[type="text"] {
-			@include grid-column(4);
 		}
 
 		.delete-item {

@@ -1,6 +1,6 @@
 @import "styles/ui/subject.scss";
 
-#users {
+#users, #new-user ul {
 	@include mobile-list();
 }
 

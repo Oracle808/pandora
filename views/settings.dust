@@ -16,7 +16,10 @@
 	    General Settings
 	    <button type="submit">Save</button>
 	  </li>
-	  <li><a>Class Name</a><input name="name" type="text" value="{subject.name}"/></li>
+	  <li>
+		<label>Class Name</label>
+		<input name="name" type="text" value="{subject.name}"/>
+	  </li>
 	  <li>
 	    <a>Quizzes</a>
 	    <input name="quizzes" type="checkbox" {?subject.settings.quizzes}checked{/subject.settings.quizzes}/>

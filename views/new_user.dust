@@ -1,0 +1,40 @@
+{>"views/base.dust"/}
+{<head}
+  <title>New User</title>
+  <link href="/styles/users.css" rel="stylesheet"/>
+{/head}
+{<body}
+  {>"views/topbar.dust"/}
+  <main>
+	<form id="new-user" action="/users/nova" method="post">
+	  <ul>
+		<li class="heading">New User</li>
+		<li class="info">
+		  The password will be set to the user’s username, by default.
+		</li>
+		<li>
+		  <label>Username</label>
+		  <input type="text" name="username"/>
+		</li>
+		<li>
+		  <label>Role</label>
+		  <select name="role">
+			<option value="student">Student</option>
+			<option value="teacher">Teacher</option>
+		  </select>
+		</li>
+		<li>
+		  <label>Subjects</label>
+		  <select multiple="multiple" name="subjects">
+			{#subjects}
+			  <option value="{id}">{name}</option>
+			{/subjects}
+		  </select>
+		</li>
+		<li class="footer">
+		  <button type="submit">Create</button>
+		</li>
+	  </ul>
+	</form>
+  </main>
+{/body}
