@@ -14,12 +14,7 @@
       <li class="has-dropdown">
         <a aria-controls="dropdown">{user.username} <span class="label round">{user.role|c}</span></a>
         <ul id="dropdown" class="dropdown">
-	  {@eq key=user.role value="admin"}
-            <li><a href="/users">Manages Users</a></li>
-	    <li><a href="/users/nova">Create a New User</a></li>
-	    <li><a href="/users/massUserCreation">Mass User Creation</a></li>
-	  {/eq}
-	  <li><a href="/logout">Logout</a></li>
+		  <li><a href="/logout">Logout</a></li>
         </ul>
       </li>
     </ul>
