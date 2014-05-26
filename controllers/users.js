@@ -55,7 +55,7 @@ exports.post = function(req, res) {
 		if(err) {
 			res.error(err);
 		} else if(req.body.role === "teacher") {
-			Subject.find({_id: {$in: [req.body.subjects]}}).update({$set: {teacher: newbie._id}}, function(err) {
+			Subject.find({_id: {$in: req.body.subjects}}).update({$push: {teacher: newbie._id}}).exec(function(err) {
 				if(err) {
 					res.error(err);
 				} else {
@@ -107,7 +107,17 @@ exports.del = function(req, res) {
 		if(err) {
 			res.error(err);
 		} else {
-			exports.list(req, res);
+			if(doc.role === "teacher") {
+				Subject.find({teacher: {$in: [doc._id]}}).update({$pull: {teacher: doc._id}}).exec(function(err) {
+					if(err) {
+						res.error(err);
+					} else {
+						exports.list(req, res);
+					}
+				});
+			} else {
+				exports.list(req, res);
+			}
 		}
 	});
 };

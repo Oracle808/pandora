@@ -27,6 +27,7 @@ var loadSubject = function(req, res, next) {
 		if(err) {
 			res.error(err);
 		} else {
+			console.log(doc.teacher);
 			req.subject = res.locals.subject = doc;
 			next();
 		}
@@ -57,9 +58,9 @@ app.post("/login", Atrium.login.attempt);
 app.get("/logout", auth, logout);
 
 // SUBJECTS
-app.del("/subjects/:subject", auth, admin, Subjects.del);
 app.get("/subjects/nova", auth, admin, Subjects.nova);
 app.post("/subjects/nova", auth, admin, Subjects.post);
+app.del("/subjects/:subject", auth, admin, loadSubject, Subjects.del);
 
 // SUBJECT BLOGS
 app.get("/subjects/:subject", auth, loadSubject, Blogs.list);

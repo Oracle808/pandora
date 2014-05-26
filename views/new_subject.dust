@@ -19,7 +19,7 @@
 	  {/subjects}
 	</select>
 	<label>Teacher</label>
-	<select name="teacher" aria-required="true" required>
+	<select name="teacher" multiple="multiple" aria-required="true" required>
 	  {#teachers}
 	    <option value="{_id}">{username}</option>
 	  {/teachers}

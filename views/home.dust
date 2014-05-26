@@ -30,7 +30,7 @@
 		{name}
 	      </a>
 	      {@eq key=user.role value="admin"}
-		{>"views/delete.dust" src="/subjects/{subject._id}" class="delete-item"/}
+			{>"views/delete.dust" src="/subjects/{_id}" class="delete-item"/}
 	      {/eq}
 	    </li>
 	  {/subjects}
