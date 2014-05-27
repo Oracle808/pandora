@@ -1,7 +1,6 @@
 @import "settings";
 @import "public/components/normalize-scss/normalize";
 @import "public/components/foundation/scss/foundation";
-@import "public/components/foundation-icon-fonts/foundation-icons";
 
 select[multiple] {
 	height:auto !important;
@@ -127,7 +126,7 @@ select[multiple] {
     }
 
 
-    ul li:hover {
+    ul li:not(.heading):hover {
 		background-color:darken($background, 5%);
     }
 
@@ -158,10 +157,8 @@ select[multiple] {
 			left:75%;
 		}
 		
-		ul {
-			li {
-				padding:0.2rem 0.95rem;
-			}
+		ul li {
+			padding:0.2rem 0.95rem;
 		}
     }
 
@@ -179,16 +176,16 @@ select[multiple] {
 			padding-bottom:$minor-margin;
 		}
 
-		ul li.header {
+		ul li.heading {
+			padding-top:10px;
+			padding-bottom:0px;
 			text-transform:uppercase;
 		}
+
 		ul li.active > a:first-child:not(.button) {
 			font-weight:bold;
 		}
 
-		#newLink {
-			@include button($full-width:true);
-		}
 		input {
 			margin-bottom:0;
 		}

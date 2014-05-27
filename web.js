@@ -27,7 +27,6 @@ var loadSubject = function(req, res, next) {
 		if(err) {
 			res.error(err);
 		} else {
-			console.log(doc.teacher);
 			req.subject = res.locals.subject = doc;
 			next();
 		}

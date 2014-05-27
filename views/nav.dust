@@ -46,22 +46,23 @@
    
 
     {?subject.pages}
-      <li class="header">Pages</li>
+	  <li class="heading">Pages</li>
       {#subject.pages}
-	<li><a href="/subjects/{subject._id}/pages/{_id}">{title}</a></li>
-      {/subject.pages}
-    {/subject.pages}
+		<li><a href="/subjects/{subject._id}/pages/{_id}">{title}</a></li>
+		{/subject.pages}
+	  {/subject.pages}
 
-    {?subject.links}
-      <li class="header">Links</li>
-      {#subject.links}
-	<li><a href="{url}">{title}</a></li>
+      {?subject.links}
+		<li class="heading">Links</li>
+		{#subject.links}
+		  <li><a href="{url}">{title}</a></li>
+		{/subject.links}
       {/subject.links}
-    {/subject.links}
 
-    {@ne key=user.role value="student"}
-      <li><a href="/subjects/{subject._id}/students">Students <i class="fi-torsos"></i></a></li>
-      <li><a href="/subjects/{subject._id}/settings">Settings <i class="fi-widget"></i></a></li>
+      {@ne key=user.role value="student"}
+	  <li class="heading">Settings</li>
+      <li><a href="/subjects/{subject._id}/students">Students <i class="fa fa-user"></i></a></li>
+      <li><a href="/subjects/{subject._id}/settings">Configuration <i class="fa fa-wrench"></i></a></li>
     {/ne}
   </ul>	
 </nav>

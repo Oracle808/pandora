@@ -9,7 +9,7 @@
   {>"views/nav.dust" active="recordings"/}
   <main>
     <ul id="recordings">
-      <li class="heading">Recordings<a href="/subjects/{subject._id}/recordings?nova=true" class="add-item"><i class="fi-plus"></i></a></li>
+      <li class="heading">Recordings<a href="/subjects/{subject._id}/recordings?nova=true" class="add-item"><i class="fa fa-plus"></i></a></li>
       <li id="new-recording" {^nova}hidden{/nova}>
 	<form action="/subjects/{subject._id}/recordings" method="post" enctype="multipart/form-data">
 	  {?error}<div class="error">{error}</div>{/error}

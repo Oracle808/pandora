@@ -10,14 +10,14 @@
     <main>
       <header class="heading">
 	<ul id="actions">
-	  <li><button id="runCode"><i class="fi-play"></i></button></li>
-	  <li><button id="openFile"><i class="fi-upload"></i></button></li>
-	  <li><button id="saveFile"><i class="fi-archive"></i></button></li>
+	  <li><button id="runCode"><i class="fa fa-play"></i></button></li>
+	  <li><button id="openFile"><i class="fa fa-upload"></i></button></li>
+	  <li><button id="saveFile"><i class="fa fa-save"></i></button></li>
 	</ul>
 	<h2>Codr</h2>
 
 	<ul id="links">
-	  <li><button id="documentation">Documentation</button></li>
+	  <li><button id="documentation"><i class="fa fa-book"></i>Documentation</button></li>
 	</ul>
       </header>
 

@@ -2,17 +2,17 @@
   {@eq key=mode value="rich-text-editor"}
     <div class="editor-formating">
       <ul>
-	<button value="bold"><i class="fi-bold"></i></button>
-	<button value="italic"><i class="fi-italic"></i></button>
-	<button value="underline"><i class="fi-underline"></i></button>
+	<button value="bold"><i class="fa fa-bold"></i></button>
+	<button value="italic"><i class="fa fa-italic"></i></button>
+	<button value="underline"><i class="fa fa-underline"></i></button>
       </ul>
       <ul>
-	<button value="insertOrderedList"><i class="fi-list-number"></i></button>
-	<button value="insertUnorderedList"><i class="fi-list-bullet"></i></button>
+	<button value="insertOrderedList"><i class="fa fa-list-ol"></i></button>
+	<button value="insertUnorderedList"><i class="fa fa-list-ul"></i></button>
       </ul>
       <ul>
-	<button value="subscript"><i class="fi-subscript"></i></button>
-	<button value="superscript"><i class="fi-superscript"></i></button>
+	<button value="subscript"><i class="fa fa-subscript"></i></button>
+	<button value="superscript"><i class="fa fa-superscript"></i></button>
       </ul>
     </div>
     <select class="font-control">
