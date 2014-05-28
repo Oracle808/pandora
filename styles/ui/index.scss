@@ -10,6 +10,10 @@ select[multiple] {
     @extend textarea;
 }
 
+[contenteditable]:active {
+	@extend textarea:hover;
+}
+
 .codebox {
     font-family: "Consolas", "monospace";
     font-size:1.05rem;

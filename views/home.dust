@@ -27,7 +27,7 @@
 	  {#subjects}
 	    <li>
 	      <a href="/subjects/{_id}">
-		{name}
+			{name}
 	      </a>
 	      {@eq key=user.role value="admin"}
 			{>"views/delete.dust" src="/subjects/{_id}" class="delete-item"/}
