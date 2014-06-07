@@ -7,34 +7,34 @@ $(document).ready(function() {
     var filename = "";
 
     var code = CodeBox.create({
-	el: $("#code"),
-	mode: CodeBox.Modes.JavaScript
+		el: $("#code"),
+		mode: CodeBox.Modes.JavaScript
     });
 
     console.log(code);
 
     $("#runCode").on("click", function() {
-	var console = {};
-	console.log = function(text) {
-	    $(".code-output").append($("<pre>").text(text));
-	};
-	eval(code.val());
+		var console = {};
+		console.log = function(text) {
+			$(".code-output").append($("<pre>").text(text));
+		};
+		eval(code.val());
     });
 
     $("#openFile").on("click", function() {
-	console.log("hi");
-	Files.openFileAsText(function(filename2, text) {
-	    filename = filename2;
-	    code.val(text);
-//	    code.highlight();
-	});
+		console.log("hi");
+		Files.openFileAsText(function(filename2, text) {
+			filename = filename2;
+			code.val(text);
+			//	    code.highlight();
+		});
     });
 
     $("#saveFile").on("click", function() {
-	Files.saveFile(filename, code.val());
+		Files.saveFile(filename, code.val());
     });
 
     $("#documentation").on("click", function() {
-	$(".flip-container").toggleClass("flipped");
+		$(".flip-container").toggleClass("flipped");
     });
 });
