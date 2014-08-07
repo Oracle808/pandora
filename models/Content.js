@@ -1,8 +1,8 @@
 var util = require("util");
-var achilles = require("achilles");
+var couchdb = require("achilles-couchdb");
 
 function Content(type, data) {
-	achilles.Model.call(this);
+	couchdb.Model.call(this);
 
 	this.define("type", String); // "rich", "latex"
 	this.define("data", String);
@@ -11,6 +11,6 @@ function Content(type, data) {
 	this.data = data;
 }
 
-util.inherits(Content, achilles.Model);
+util.inherits(Content, couchdb.Model);
 
 module.exports = Content;

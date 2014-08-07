@@ -1,38 +1,38 @@
 var util = require("util");
-var achilles = require("achilles");
+var couchdb = require("achilles-couchdb");
 var Content = require("./Content");
 
 function Question() {
-	achilles.Object.call(this);
+	couchdb.Model.call(this);
 
 	this.define("content", Content);
 	this.define("answer_type", String); // "text", "number", "radio", "checkbox"
-	this.define("answer", String);
+	this.define("answer_text", String);
+	this.define("answer_number", Number);
+	this.define("answer_radio", String);
+	this.define("answer_checkbox", [String]);
 	this.define("options", [String]);
 	this.options = [];
 
 	this.answer_type = "text";
-	this.on("change:answer_type", this.redefineAnswer.bind(this));
+	this.on("change:answer_type", this.delAnswer.bind(this));
 };
 
-Question.prototype.redefineAnswer = function() {
-	if(this.answer_type === "number") {
-		this.define("answer", Number);
-	} else if(this.answer_type === "checkbox") {
-		this.define("answer", [String]);
-	} else if(this.answer_type === "text" || this.answer_type === "radio") {
-		this.define("answer", String);
-	}
+Question.prototype.delAnswer = function() {
+	this.answer_text = null;
+	this.answer_number = null;
+	this.answer_radio = null;
+	this.answer_checkbox = null;
 
-	if(this.answer_type !== "radio") {
+	if(this.answer_type !== "radio" || this.answer_type !== "checkbox") {
 		this.options = [];
 	}
 };
 
-util.inherits(Question, achilles.Model);
+util.inherits(Question, couchdb.Model);
 
 function Quiz() {
-	achilles.Object.call(this);
+	couchdb.Model.call(this);
 	
 	this.define("questions", [Question]);
 	this.define("title", String);
@@ -41,6 +41,6 @@ function Quiz() {
 	this.questions = [];
 }
 
-util.inherits(Quiz, achilles.Model);
+util.inherits(Quiz, couchdb.Model);
 
 module.exports = Quiz;
