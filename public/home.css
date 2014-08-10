@@ -1,3 +1,16 @@
 body {
 	background-image:url(http://subtlepatterns.com/patterns/stardust.png);
+	padding:70px;
+}
+
+.icon {
+	padding:20px;
+}
+
+.icon img:hover {
+	padding-top:15px;
+	padding-left:30px;
+	padding-right:30px;
+	-webkit-transition-property: padding;
+	-webkit-transition-duration: 0.5s;
 }

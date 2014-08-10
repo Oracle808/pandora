@@ -30,11 +30,13 @@ function Course(title) {
 	couchdb.Model.call(this);
 
 	this.define("title", String); // E.g. "10a/Fr1"
+	this.define("icon", String); // E.g. "French"
 	this.define("posts", [Post]); // I.e. Blog
 	this.define("quizzes", [Quiz]);
 	this.define("vocabQuizzes", [VocabQuiz]);
 	this.define("links", [Link]);
 	this.define("pages", [Page]);
+	this.define("club", Boolean);
 	
 	this.ref("teachers", [couchdb.User]); // Subjects can have multiple teachers
 	this.ref("students", [couchdb.User]); 

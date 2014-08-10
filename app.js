@@ -38,11 +38,20 @@ var server = new achilles.Router();
 server.use(serveStatic("./public"));
 server.use(bodyParser.urlencoded());
 server.use(bodyParser.json());
-server.use(cookieParser("fsfsddfs"));
-server.use(session({secret:"fsfsddfs"}));
+server.use(cookieParser("fsfds"));
+server.use(session({
+ cookie : {
+    maxAge: 3600000 // see below
+  }
+}));
 server.use(passport.initialize());
 server.use(passport.session());
 
+server.get("/logout", function(req, res) {
+	req.session.destroy(function() {
+		res.redirect("/");
+	});
+});
 
 server.view("/login", require("./views/login.mustache"));
 
