@@ -29,7 +29,7 @@ util.inherits(Link, couchdb.Model);
 function Course(title) {
 	couchdb.Model.call(this);
 
-	this.define("title", String); // E.g. "10a/Fr1"
+	// ID will be "10a/Fr1" for example
 	this.define("icon", String); // E.g. "French"
 	this.define("posts", [Post]); // I.e. Blog
 	this.define("quizzes", [Quiz]);
