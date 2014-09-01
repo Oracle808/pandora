@@ -1,3 +1,5 @@
+*This is the deprecated version of Pandora. The new version can be found [here](https://github.com/HashanP/Pandora).*
+
 PANDORA: The VLE
 ===
 ![Screenshot of the Home Page](https://raw.github.com/HashanP/WHSB/master/public/screenshots/homepage.png)
