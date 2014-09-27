@@ -12,7 +12,7 @@ function VocabQuestion(title, answer) {
 
 util.inherits(VocabQuestion, couchdb.Model);
 
-function VocabQuiz(type, data) {
+function VocabQuiz() {
 	couchdb.Model.call(this);
 	this.define("title", String);
 	this.define("questions", [VocabQuestion]);
