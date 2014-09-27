@@ -16,7 +16,7 @@ function Question() {
 
 	this.answer_type = "text";
 	this.on("change:answer_type", this.delAnswer.bind(this));
-};
+}
 
 Question.prototype.delAnswer = function() {
 	this.answer_text = null;
