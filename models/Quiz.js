@@ -1,9 +1,9 @@
 var util = require("util");
-var couchdb = require("achilles-couchdb");
+var achilles = require("achilles");
 var Content = require("./Content");
 
 function Question() {
-	couchdb.Model.call(this);
+	achilles.Model.call(this);
 
 	this.define("content", Content);
 	this.define("answer_type", String); // "text", "number", "radio", "checkbox"
@@ -29,10 +29,10 @@ Question.prototype.delAnswer = function() {
 	}
 };
 
-util.inherits(Question, couchdb.Model);
+util.inherits(Question, achilles.Model);
 
 function Quiz() {
-	couchdb.Model.call(this);
+	achilles.Model.call(this);
 	
 	this.define("questions", [Question]);
 	this.define("title", String);
@@ -41,6 +41,6 @@ function Quiz() {
 	this.questions = [];
 }
 
-util.inherits(Quiz, couchdb.Model);
+util.inherits(Quiz, achilles.Model);
 
 module.exports = Quiz;

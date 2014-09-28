@@ -3,8 +3,8 @@ var http = require("http");
 var hogan = require("hogan.js");
 var fs = require("fs");
 var serveStatic = require("serve-static");
-var passport = require("passport");
-var LocalStrategy = require("passport-local").Strategy;
+//var passport = require("passport");
+//var LocalStrategy = require("passport-local").Strategy;
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var session = require("express-session");
@@ -16,10 +16,10 @@ require.extensions[".mustache"] = function(module, filename) {
 	};
 };
 
-var couchdb = require("achilles-couchdb");
-couchdb.User.URL = "http://localhost:5984/_users";
+var mongodb = require("achilles-mongodb");
 
-passport.use(new LocalStrategy(function() {
+
+/*passport.use(new LocalStrategy(function() {
 	couchdb.User.Login.apply(couchdb.User, arguments);
 }));
 
@@ -30,7 +30,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
 	console.log(user);
 	done(null, user);
-});
+});*/
 
 
 
@@ -44,8 +44,8 @@ server.use(session({
     maxAge: 3600000 // see below
   }
 }));
-server.use(passport.initialize());
-server.use(passport.session());
+//server.use(passport.initialize());
+//server.use(passport.session());
 
 server.get("/logout", function(req, res) {
 	req.session.destroy(function() {
@@ -55,7 +55,7 @@ server.get("/logout", function(req, res) {
 
 server.view("/login", require("./views/login.mustache"));
 
-server.post("/login", passport.authenticate("local", {
+/*server.post("/login", passport.authenticate("local", {
 	successRedirect: "/courses",
 	failureRedirect: "/login"
 }));
@@ -86,5 +86,5 @@ courseService.get("/", function(req, res, next) {
 });
 
 server.use("/courses", courseService);
-
+*/
 http.createServer(server.route).listen(5000);

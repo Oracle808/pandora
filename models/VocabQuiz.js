@@ -1,8 +1,8 @@
 var util = require("util");
-var couchdb = require("achilles-couchdb");
+var achilles = require("achilles");
 
 function VocabQuestion(title, answer) {
-	couchdb.Model.call(this);
+	achilles.Model.call(this);
 	this.define("title", String);
 	this.define("answer", String);
 	
@@ -10,15 +10,15 @@ function VocabQuestion(title, answer) {
 	this.answer = answer;
 }
 
-util.inherits(VocabQuestion, couchdb.Model);
+util.inherits(VocabQuestion, achilles.Model);
 
 function VocabQuiz(type, data) {
-	couchdb.Model.call(this);
+	achilles.Model.call(this);
 	this.define("title", String);
 	this.define("questions", [VocabQuestion]);
 	this.define("randomise_questions", Boolean);
 }
 
-util.inherits(VocabQuiz, couchdb.Model);
+util.inherits(VocabQuiz, achilles.Model);
 
 module.exports = VocabQuiz;
