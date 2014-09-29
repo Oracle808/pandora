@@ -1,13 +1,14 @@
 var achilles = require("achilles");
-var http = require("http");
+var mongodb = require("achilles-mongodb");
+var express = require("express");
 var hogan = require("hogan.js");
 var fs = require("fs");
 var serveStatic = require("serve-static");
-//var passport = require("passport");
-//var LocalStrategy = require("passport-local").Strategy;
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var session = require("express-session");
+var models = require("./models");
+var browserify = require("browserify-middleware");
 
 require.extensions[".mustache"] = function(module, filename) {
 	var template = hogan.compile(fs.readFileSync(filename).toString());
@@ -18,73 +19,58 @@ require.extensions[".mustache"] = function(module, filename) {
 
 var mongodb = require("achilles-mongodb");
 
+achilles.User.connection 
+	= models.Course.connection
+	= new mongodb.Connection("mongodb://localhost:27017/pandora");
 
-/*passport.use(new LocalStrategy(function() {
-	couchdb.User.Login.apply(couchdb.User, arguments);
+var app = new express();
+
+app.use(serveStatic("./public", {
+	extensions: ["html"]
 }));
-
-passport.serializeUser(function(user, done) {
-	done(null, user.toJSON());
-});
-
-passport.deserializeUser(function(user, done) {
-	console.log(user);
-	done(null, user);
-});*/
-
-
-
-var server = new achilles.Router();
-server.use(serveStatic("./public"));
-server.use(bodyParser.urlencoded());
-server.use(bodyParser.json());
-server.use(cookieParser("fsfds"));
-server.use(session({
+app.use(bodyParser.urlencoded({
+	extended:true
+}));
+app.use(bodyParser.json());
+app.use(cookieParser("fsfds"));
+app.use(session({
  cookie : {
     maxAge: 3600000 // see below
   }
 }));
-//server.use(passport.initialize());
-//server.use(passport.session());
+app.use("/scripts", browserify("./scripts"));
 
-server.get("/logout", function(req, res) {
-	req.session.destroy(function() {
-		res.redirect("/");
+app.post("/login", function(req, res, cb) {
+	achilles.User.login(req.body.username, req.body.password, function(err, user) {
+		if(err) {
+			return cb(err);
+		} else if(!user) {
+			res.redirect("/login");
+		} else {
+			req.session.user = user.toJSON();
+			res.redirect("/courses");
+		}
 	});
 });
 
-server.view("/login", require("./views/login.mustache"));
-
-/*server.post("/login", passport.authenticate("local", {
-	successRedirect: "/courses",
-	failureRedirect: "/login"
-}));
-
-server.use(function(req, res, next) {
-	console.log("dsds");
-	console.log(req.isAuthenticated());
-	if(req.isAuthenticated()) {
-		console.log("fsdfsd");
-		next();
+app.all("*", function(req, res, cb) {
+	if(req.session.user) {
+		cb();
 	} else {
 		res.redirect("/login");
 	}
 });
 
+var courses = require("./views/courses.mustache");
 
-var Course = require("./models/Course");
-var courseService = new achilles.Service(Course);
-var homePage = require("./views/home.mustache");
-
-courseService.get("/", function(req, res, next) {
-	console.log(req.isAuthenticated());
-	Course.findByRef("students", req.user._id, function(err, courses) {
-		console.log(courses);
-		res.end(homePage({courses:courses}));
-	});
-//	next();
+app.get("/courses", function(req, res, cb) {
+	if(!req.xhr) {
+		res.end(courses());
+	} else {
+		cb();
+	}
 });
 
-server.use("/courses", courseService);
-*/
-http.createServer(server.route).listen(5000);
+app.use("/courses", new achilles.Service(models.Course));
+
+app.listen(5000);

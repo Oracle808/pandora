@@ -18,6 +18,8 @@ function Question() {
 	this.on("change:answer_type", this.delAnswer.bind(this));
 };
 
+util.inherits(Question, achilles.Model);
+
 Question.prototype.delAnswer = function() {
 	this.answer_text = null;
 	this.answer_number = null;
@@ -28,8 +30,6 @@ Question.prototype.delAnswer = function() {
 		this.options = [];
 	}
 };
-
-util.inherits(Question, achilles.Model);
 
 function Quiz() {
 	achilles.Model.call(this);

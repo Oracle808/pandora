@@ -36,7 +36,6 @@ function Course(title) {
 	this.define("vocabQuizzes", [VocabQuiz]);
 	this.define("links", [Link]);
 	this.define("pages", [Page]);
-	this.define("club", Boolean);
 
 	this.title = title;
 }
