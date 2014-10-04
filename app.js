@@ -38,7 +38,9 @@ app.use(session({
     maxAge: 3600000 // see below
   }
 }));
-app.use("/scripts", browserify("./scripts"));
+app.use("/scripts", browserify("./scripts", {
+	transform:["browserify-mustache"]
+}));
 
 app.post("/login", function(req, res, cb) {
 	achilles.User.login(req.body.username, req.body.password, function(err, user) {
@@ -48,7 +50,7 @@ app.post("/login", function(req, res, cb) {
 			res.redirect("/login");
 		} else {
 			req.session.user = user.toJSON();
-			res.redirect("/courses");
+			res.redirect("/");
 		}
 	});
 });
@@ -63,7 +65,7 @@ app.all("*", function(req, res, cb) {
 
 var courses = require("./views/courses.mustache");
 
-app.get("/courses", function(req, res, cb) {
+app.get("/", function(req, res, cb) {
 	if(!req.xhr) {
 		res.end(courses());
 	} else {

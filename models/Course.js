@@ -29,7 +29,7 @@ util.inherits(Link, achilles.Model);
 function Course(title) {
 	achilles.Model.call(this);
 
-	this.define("name", String); // E.g. "10a/Fr1"
+	this.define("title", String); // E.g. "10a/Fr1"
 	this.define("icon", String); // E.g. "French"
 	this.define("posts", [Post]); // I.e. Blog
 	this.define("quizzes", [Quiz]);

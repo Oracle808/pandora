@@ -1,5 +1,5 @@
 body {
-	background-image:url(http://subtlepatterns.com/patterns/stardust.png);
+	background-image: url(http://subtlepatterns.com/patterns/crossword.png);
 	padding:70px;
 }
 
@@ -13,4 +13,8 @@ body {
 	padding-right:30px;
 	-webkit-transition-property: padding;
 	-webkit-transition-duration: 0.5s;
+}
+
+.row {
+	margin-bottom:5px;
 }
