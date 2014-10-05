@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-md-3 col-md-offset-9">
+	<div class="pull-right">
+	  <div class="btn-group">
+		<button type="button" class="grid btn btn-primary active">Grid</button>
+		<button type="button" class="list btn btn-primary">List</button>
+	  </div>
+	  <a href="/create" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+	</div>
+  </div>
+</div>
+<div class="row">
+  {{#grid}}
+	{{#data}}
+	  <div class="col-sm-6 col-md-3">
+		<div class="thumbnail">
+		  <img src="/icons/{{icon}}.png" alt="{{icon}}">
+		  <div class="caption">
+			<h3>{{title}}</h3>
+			<a href="#" class="pull-right" role="button"><i class="fa-times fa"></i></a>
+		  </div>
+		</div>
+	  </div>
+	{{/data}}
+	{{^data}}
+	  <div class="col-md-12">
+		<div class="alert alert-info" role="alert">No courses have been allocated to you yet.</div>
+	  </div>
+	{{/data}}
+  {{/grid}}
+  {{^grid}}
+	<div class="col-sm-12 col-md-12">
+	  <ul class="list-group">
+		{{#data}}
+		  <li class="list-group-item">{{title}}</li>
+		{{/data}}
+	  </ul>
+	</div>
+  {{/grid}}
+</div>
