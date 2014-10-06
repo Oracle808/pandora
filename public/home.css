@@ -7,6 +7,10 @@ body {
 	padding:20px;
 }
 
+.icon img {
+	width:100%;
+}
+
 .icon img:hover {
 	padding-top:15px;
 	padding-left:30px;

@@ -73,6 +73,15 @@ CreateView.prototype.submit = function(e) {
 
 CreateView.prototype.templateSync = require("../views/create.mustache");
 
+function CourseView(el, doc) {
+	achilles.View.call(this, el);
+	this.data = doc;
+}
+
+util.inherits(CourseView, achilles.View);
+
+CourseView.prototype.templateSync = require("../views/course.mustache");
+
 models.Course.connection = new achilles.Connection("http://localhost:5000/courses");
 
 window.onload = function() {
@@ -86,6 +95,12 @@ window.onload = function() {
 	});
 	page("/create", function() {
 		new CreateView(main, models.Course);
+	});
+	page("/course/:course", function(e) {
+		console.log(e);
+		models.Course.getById(e.params.course, function(err, doc) {
+			new CourseView(main, doc);
+		});
 	});
 	page();
 };

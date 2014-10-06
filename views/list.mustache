@@ -12,14 +12,10 @@
 <div class="row">
   {{#grid}}
 	{{#data}}
-	  <div class="col-sm-6 col-md-3">
-		<div class="thumbnail">
+	  <div class="icon col-sm-6 col-md-3">
+		<a href="/course/{{_id}}">
 		  <img src="/icons/{{icon}}.png" alt="{{icon}}">
-		  <div class="caption">
-			<h3>{{title}}</h3>
-			<a href="#" class="pull-right" role="button"><i class="fa-times fa"></i></a>
-		  </div>
-		</div>
+		</a>
 	  </div>
 	{{/data}}
 	{{^data}}
