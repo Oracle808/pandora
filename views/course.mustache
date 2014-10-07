@@ -4,19 +4,31 @@
 	  <div class="panel panel-default">
 		<div class="panel-heading">{{title}}</div>
 		<ul class="list-group">
-		  <li class="list-group-item active"><a href="/course/{{_id}}/blog">Blog</a></li>
-		  <li class="list-group-item"><a href="/course/{{_id}}/vocab_quizzes">Vocabulary Quizzes</a></li>
-		  <li class="list-group-item"><a href="/course/{{_id}}/quizzes">Quizzes</a></li>
-		  <li class="list-group-item"><a href="/course/{{_id}}/uploads">File Uploads</a></li>
-		  <li class="list-group-item"><a href="/course/{{_id}}/downloads">File Downloads</a></li>
+		  <li class="list-group-item {{#blog}}active{{/blog}}">
+			<a href="/course/{{_id}}/blog">Blog</a>
+		  </li>
+		  <li class="list-group-item {{#vocab_quizzes}}active{{/vocab_quizzes}}">
+			<a href="/course/{{_id}}/vocab_quizzes">Vocabulary Quizzes</a>
+		  </li>
+		  <li class="list-group-item {{#quizzes}}active{{/quizzes}}">
+			<a href="/course/{{_id}}/quizzes">Quizzes</a>
+		  </li>
+		  <li class="list-group-item {{#uploads}}active{{/uploads}}">
+			<a href="/course/{{_id}}/uploads">File Uploads</a>
+		  </li>
+		  <li class="list-group-item {{#downloads}}active{{/downloads}}">
+			<a href="/course/{{_id}}/downloads">File Downloads</a>
+		  </li>
 		</ul>
 	  </div>
 	</div>
-	<div class="col-md-9">
-	  <div class="panel panel-default">
-		<div class="panel-heading">Blog</div>
+	<div class="col-md-9 course">
+	  <div class="panel panel-danger">
+		<div class="panel-heading">
+		  <h3 class="panel-title">Error</h3>
+		</div>
 		<div class="panel-body">
-		  Panel content
+		  404 Not Found
 		</div>
 	  </div>
 	</div>

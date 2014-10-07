@@ -73,14 +73,24 @@ CreateView.prototype.submit = function(e) {
 
 CreateView.prototype.templateSync = require("../views/create.mustache");
 
-function CourseView(el, doc) {
+function CourseView(el, options) {
 	achilles.View.call(this, el);
-	this.data = doc;
+	this.data = options.data;
+	this[options.section] = true;
 }
 
 util.inherits(CourseView, achilles.View);
 
 CourseView.prototype.templateSync = require("../views/course.mustache");
+
+function BlogView(el, options) {
+	achilles.View.call(this, el);
+	this.data = options.data;
+}
+
+util.inherits(BlogView, achilles.View);
+
+BlogView.prototype.templateSync = require("../views/blog.mustache");
 
 models.Course.connection = new achilles.Connection("http://localhost:5000/courses");
 
@@ -96,10 +106,16 @@ window.onload = function() {
 	page("/create", function() {
 		new CreateView(main, models.Course);
 	});
-	page("/course/:course", function(e) {
-		console.log(e);
+	page("/course/:course/:section", function(e, next) {
 		models.Course.getById(e.params.course, function(err, doc) {
-			new CourseView(main, doc);
+			new CourseView(main, {data: doc, section: e.params.section});
+			next();
+		});
+	});
+	page("/course/:course/blog", function(e) {
+		models.Course.getById(e.params.course, function(err, doc) {
+			new BlogView(document.querySelector(".course"), {data: doc.blog});
+			next();
 		});
 	});
 	page();
