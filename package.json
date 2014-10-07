@@ -1,6 +1,6 @@
 {
   "name": "Pandora2",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "description": "The world's most advanced virtual learning environment",
   "main": "app.js",
   "scripts": {
