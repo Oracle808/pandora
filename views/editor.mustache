@@ -1,0 +1,54 @@
+<div class="editor-toolbar">
+  {{#rich}}
+    <div class="editor-formating">
+      <ul>
+		<button value="bold"><i class="fa fa-bold"></i></button>
+		<button value="italic"><i class="fa fa-italic"></i></button>
+		<button value="underline"><i class="fa fa-underline"></i></button>
+      </ul>
+      <ul>
+		<button value="insertOrderedList"><i class="fa fa-list-ol"></i></button>
+		<button value="insertUnorderedList"><i class="fa fa-list-ul"></i></button>
+      </ul>
+      <ul>
+		<button value="subscript"><i class="fa fa-subscript"></i></button>
+		<button value="superscript"><i class="fa fa-superscript"></i></button>
+      </ul>
+    </div>
+    <select class="font-control">
+      <option value="Helvetica Neue" selected>Helvetica Neue</option>
+      <option value="Arial">Arial</option>
+      <option value="Arial Black">Arial Black</option>
+      <option value="Comic Sans MS">Comic Sans MS</option>
+      <option value="Times New Roman">Times New Roman</option>
+      <option value="Tahoma">Tahoma</option>
+      <option value="Verdana">Verdana</option>
+      <option value="Courier New">Courier New</option>
+    </select>
+  {{/rich}}
+  {{^rich}}
+    <ul role="tablist">
+      <li><a class="open-tab" value="editor">Editor</a></li>
+      <li><a class="open-tab" value="preview">Preview</a></li>
+    </ul>
+  {{/rich}}
+  <select class="mode">
+    <option value="rich-text-editor" {{#rich}}selected{{/rich}}>Rich Text Editor</option>
+    <option value="latex" {{#rich}}selected{{/rich}}>Latex</option>
+  </select>
+</div>
+
+{{#rich}}
+  <div contenteditable="true" class="editor-rich"></div>
+{{/rich}}
+{{^rich}}
+  {{#editorOpen}}
+	<div contenteditable="true" class="editor-latex"></div>
+  {{/editorOpen}}
+  {{^editorOpen}}
+	<div class="preview">
+	  <script type="math/tex">{{model.data}}</script>
+	</div>
+  {/eq}
+  {{/editorOpen}}
+{{/rich}}

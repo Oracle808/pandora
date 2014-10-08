@@ -2,6 +2,7 @@ var models = require("../models");
 var achilles = require("achilles");
 var page = require("page");
 var util = require("util");
+var Editor = require("./Editor");
 
 function ListView(el, data) {
 	achilles.View.call(this, el);
@@ -86,11 +87,21 @@ CourseView.prototype.templateSync = require("../views/course.mustache");
 function BlogView(el, options) {
 	achilles.View.call(this, el);
 	this.data = options.data;
+	this.id = options.id;
 }
 
 util.inherits(BlogView, achilles.View);
 
 BlogView.prototype.templateSync = require("../views/blog.mustache");
+
+function CreatePostView(el) {
+	achilles.View.call(this, el);
+	new Editor(this.el.querySelector(".content"));
+}
+
+util.inherits(CreatePostView, achilles.View);
+
+CreatePostView.prototype.templateSync = require("../views/createPost.mustache");
 
 models.Course.connection = new achilles.Connection("http://localhost:5000/courses");
 
@@ -114,9 +125,12 @@ window.onload = function() {
 	});
 	page("/course/:course/blog", function(e) {
 		models.Course.getById(e.params.course, function(err, doc) {
-			new BlogView(document.querySelector(".course"), {data: doc.blog});
+			new BlogView(document.querySelector(".course"), {data: doc.blog, id:doc._id});
 			next();
 		});
+	});
+	page("/course/:course/blog/create", function(e) {
+		new CreatePostView(document.querySelector(".course"));
 	});
 	page();
 };
