@@ -7,7 +7,7 @@ function Content(type, data) {
 	this.define("type", String); // "rich", "latex"
 	this.define("data", String);
 
-	this.type = type;
+	this.type = type || "rich-text-editor";
 	this.data = data;
 }
 

@@ -13,17 +13,15 @@ var EditorController = function(el, value) {
 	// Property Declerations
 	this.define("model", Content);
 	this.define("open_tab", String); //"preview", "editor"
-	this.model = new Content(EditorModes.RichText, value || "");
-	this.rich = true;
-	this.openEditor = true;
+	this.open_tab = "editor";
 
 	// Event Declerations
-	this.on("click .editor-toolbar button", this.updateFormat.bind(this)); // Formatting
+	this.on("click .editor-formatting button", this.updateFormat.bind(this)); // Formatting
 	this.on("change .font-control", this.updateFont.bind(this)); // Font
 	this.on("click .editor-rich", this.reconfigure.bind(this)); // Reconfigure Editor Rich
 	this.on("keydown .editor-rich", this.reconfigure.bind(this)); // Reconfigure Editor Rich
-	this.on("click .open-tab", this.openTab.bind(this)); // Open Tasb
-	this.on("change:el", this.render.bind(this));
+	this.on("click .open-tab", this.openTab.bind(this)); // Open Tab
+	this.on("change:model", this.setupModel.bind(this));
 
 	this.on("render", (function() {
 		console.log(this.el);
@@ -32,11 +30,27 @@ var EditorController = function(el, value) {
 	this.bind(".editor-rich", "data");
 	this.bind(".editor-mode", "type");
 	this.delegate(".editor-latex", "data", new CodeBox(CodeBox.Modes.LaTeX));
+	console.log(el);
 };
 
 util.inherits(EditorController, achilles.View);
 
 EditorController.prototype.templateSync = require("../views/editor.mustache");
+
+EditorController.prototype.setupModel = function() {
+	this.model.on("change:type", this.render.bind(this));
+};
+
+EditorController.prototype.render = function() {
+	this.editorOpen = this.open_tab === "editor";
+	if(this.model) {
+		this.rich = this.model.type === "rich-text-editor";
+	}
+	achilles.View.prototype.render.call(this);
+	if(this.open_tab === "preview" && this.model.type === EditorModes.LaTeX) {
+		MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.el.querySelector(".preview")]);
+	}
+};
 
 EditorController.prototype.updateFont = function(e) {
 	document.execCommand("fontName", false, e.target.value);
@@ -48,24 +62,19 @@ EditorController.prototype.updateFormat = function(e) {
 	e.preventDefault();
 };
 
-EditorController.prototype.subviews = function() {
-	if(this.open_tab === "preview" && this.model.type === EditorModes.RichTextEditor) {
-		MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.el.querySelector(".preview")]);
-	}
-};
-
 EditorController.prototype.reconfigure = function() {
 	["bold", "underline", "italic", "insertOrderedList", "insertUnorderedList"].forEach((function(option) {
 		if(document.queryCommandState(option)) {
-			this.find("[value=\"" + option + "\"]").addClass("active");
+			this.el.querySelector("[value=\"" + option + "\"]").classList.add("active");
 		} else {
-			this.find("[value=\"" + option + "\"]").removeClass("active");
+			this.el.querySelector("[value=\"" + option + "\"]").classList.remove("active");
 		}
 	}).bind(this));
 };
 
 EditorController.prototype.openTab = function(e) {
 	this.open_tab = e.target.value;
+	this.render();
 };
 
 module.exports = EditorController;

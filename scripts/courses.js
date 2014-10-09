@@ -96,7 +96,8 @@ BlogView.prototype.templateSync = require("../views/blog.mustache");
 
 function CreatePostView(el) {
 	achilles.View.call(this, el);
-	new Editor(this.el.querySelector(".content"));
+	this.model = new models.Post();
+	this.delegate(".content", "content", new Editor());
 }
 
 util.inherits(CreatePostView, achilles.View);
@@ -126,7 +127,6 @@ window.onload = function() {
 	page("/course/:course/blog", function(e) {
 		models.Course.getById(e.params.course, function(err, doc) {
 			new BlogView(document.querySelector(".course"), {data: doc.blog, id:doc._id});
-			next();
 		});
 	});
 	page("/course/:course/blog/create", function(e) {
