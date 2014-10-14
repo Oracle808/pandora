@@ -29,8 +29,8 @@ var EditorController = function(el, value) {
 
 	this.bind(".editor-rich", "data");
 	this.bind(".editor-mode", "type");
-	this.delegate(".editor-latex", "data", new CodeBox(CodeBox.Modes.LaTeX));
-	console.log(el);
+	this.codebox = new CodeBox(CodeBox.Modes.LaTeX);
+	this.delegate(".editor-latex", "data", this.codebox);
 };
 
 util.inherits(EditorController, achilles.View);
@@ -48,6 +48,8 @@ EditorController.prototype.render = function() {
 	}
 	achilles.View.prototype.render.call(this);
 	if(this.open_tab === "preview" && this.model.type === EditorModes.LaTeX) {
+		console.log("fsdfds");
+		console.log(this.model);
 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.el.querySelector(".preview")]);
 	}
 };

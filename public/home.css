@@ -41,3 +41,7 @@ body {
 	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 	outline:none;
 }
+
+.editor-preview {
+	font-size:20px;
+}

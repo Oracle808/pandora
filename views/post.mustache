@@ -1,0 +1,17 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+	Blog
+	<div class="pull-right">
+	  <a href="/course/{{id}}/blog/create">
+		<i class="fa fa-plus"></i>
+	  </a>
+	</div>
+  </div>
+  {{#data}}
+	<div class="panel-body">
+	  <h1>{{title}}</h1>
+	  <p>{{& content.html}}
+	</div>
+  {{/data}}
+  </ul>
+</div>

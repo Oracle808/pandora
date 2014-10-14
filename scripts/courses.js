@@ -4,6 +4,14 @@ var page = require("page");
 var util = require("util");
 var Editor = require("./Editor");
 
+MathJax.Hub.Config({
+	tex2jax: {
+		displayMath: [],
+		inlineMath: []
+	},
+	showMathMenu:false
+});
+
 function ListView(el, data) {
 	achilles.View.call(this, el);
 	this.define("data", [models.Course]);
@@ -88,19 +96,55 @@ function BlogView(el, options) {
 	achilles.View.call(this, el);
 	this.data = options.data;
 	this.id = options.id;
+	console.log(this.id);
 }
 
 util.inherits(BlogView, achilles.View);
 
 BlogView.prototype.templateSync = require("../views/blog.mustache");
 
-function CreatePostView(el) {
+function PostView(el, options) {
+	achilles.View.call(this, el);
+	this.data = options.data;
+	this.id = options.id;
+}
+
+util.inherits(PostView, achilles.View);
+
+PostView.prototype.templateSync = require("../views/post.mustache");
+
+BlogView.prototype.render = PostView.prototype.render = function() {
+	achilles.View.prototype.render.call(this);
+	Array.prototype.slice.call(this.el.querySelectorAll(".preview-latex")).forEach(function(y) {
+		MathJax.Hub.Queue(["Typeset", MathJax.Hub, y]);
+	});
+};
+
+function CreatePostView(el, options) {
 	achilles.View.call(this, el);
 	this.model = new models.Post();
+	this.bind(".title", "title");
 	this.delegate(".content", "content", new Editor());
+	this.on("click .submit", this.submit.bind(this));
+	this.id = options.id;
 }
 
 util.inherits(CreatePostView, achilles.View);
+
+CreatePostView.prototype.submit = function(e) {
+	e.preventDefault();
+	console.log(this.model);
+	this.error = false;
+	var y = new models.Course();
+	y._id = this.id;
+	y.posts = [this.model];
+	this.model.save(function(err) {
+		if(err) {
+			this.error = err;
+		}
+		page("/course/" + this.id + "/blog");
+	}.bind(this));
+};
 
 CreatePostView.prototype.templateSync = require("../views/createPost.mustache");
 
@@ -126,11 +170,16 @@ window.onload = function() {
 	});
 	page("/course/:course/blog", function(e) {
 		models.Course.getById(e.params.course, function(err, doc) {
-			new BlogView(document.querySelector(".course"), {data: doc.blog, id:doc._id});
+			new BlogView(document.querySelector(".course"), {data: doc.posts, id:doc._id});
 		});
 	});
 	page("/course/:course/blog/create", function(e) {
-		new CreatePostView(document.querySelector(".course"));
+		new CreatePostView(document.querySelector(".course"), {id:e.params.course});
+	});
+	page("/course/:course/blog/:post", function(e) {
+		models.Course.getById(e.params.course, function(err, doc) {
+			new PostView(document.querySelector(".course"), {data: doc.posts[e.params.index], id:doc._id});
+		});
 	});
 	page();
 };

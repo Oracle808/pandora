@@ -89,6 +89,10 @@ var CodeBox = function(mode, value) {
 
 	this.on("change:el", this.disableSpellcheck.bind(this));
 	console.log(this.value);
+	
+	this.on("change:el", function() {
+		console.log(this.el);
+	});
 };
 
 util.inherits(CodeBox, achilles.View);
@@ -96,6 +100,7 @@ util.inherits(CodeBox, achilles.View);
 CodeBox.prototype.className = "codebox";
 
 CodeBox.prototype.indent = function(e) {
+	console.log("wow");
 	if(e.keyCode === 9) { // Checks whether tab was pressed
 		document.execCommand("indent");
 		e.preventDefault();
@@ -103,11 +108,13 @@ CodeBox.prototype.indent = function(e) {
 };
 
 CodeBox.prototype.update = function(e) {
+	console.log("hello");
 	if(e.keyCode !== 13) {
 		var data = this.el.innerHTML.replace(/<\/div>(?!$)/g, "\n");
 		data = data.replace(/<\/?[^>]+(>|$)/g, "");
 		console.log(data);
 		this.value = data;
+		console.log("hi");
 	}
 };
 

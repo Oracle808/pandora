@@ -37,6 +37,12 @@ function Course(title) {
 	this.define("links", [Link]);
 	this.define("pages", [Page]);
 
+	this.posts = [];
+	this.quizzes = [];
+	this.vocabQuizzes = [];
+	this.links = [];
+	this.pages = [];
+
 	this.title = title;
 }
 

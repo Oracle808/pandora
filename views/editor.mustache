@@ -32,7 +32,7 @@
 	{{^rich}}
 	  <div class="btn-group col-md-3">
 		<button type="button" class="btn btn-default open-tab {{#editorOpen}}active{{/editorOpen}}" value="editor">Editor</button>
-		<button type="button" class="btn btn-default open-tab {{#editorOpen}}active{{/editorOpen}}" value="preview">Preview</button>
+		<button type="button" class="btn btn-default open-tab {{^editorOpen}}active{{/editorOpen}}" value="preview">Preview</button>
       </div>
 	{{/rich}}
 	<div class="col-md-3">
@@ -44,6 +44,8 @@
   </div>
 
   <br/>
+  <br/>
+  <br/>
 
   <div class="col-md-12">
 	{{#rich}}
@@ -54,7 +56,7 @@
 		<div contenteditable="true" class="editor-latex"></div>
 	  {{/editorOpen}}
 	  {{^editorOpen}}
-		<div class="preview">
+		<div class="preview editor-preview">
 		  <script type="math/tex">{{model.data}}</script>
 		</div>
 	  {{/editorOpen}}
