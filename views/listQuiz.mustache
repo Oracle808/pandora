@@ -1,0 +1,19 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+	{{title}}
+	<div class="pull-right">
+	  <a href="/course/{{id}}/{{section}}/create">
+		<i class="fa fa-plus"></i>
+	  </a>
+	</div>
+  </div>
+  <ul class="list-group">
+	{{#data}}
+	  <li class="list-group-item">
+		<a href="/course/{{id}}/blog/{{index}}">
+		  {{title}}
+		</a>
+	  </li>
+	{{/data}}
+  </ul>
+</div>

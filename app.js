@@ -21,7 +21,7 @@ var mongodb = require("achilles-mongodb");
 
 achilles.User.connection 
 	= models.Course.connection
-	= new mongodb.Connection("mongodb://localhost:27017/pandora");
+	= new mongodb.Connection(process.env.MONGOLAB_URI || "mongodb://localhost:27017/pandora");
 
 var app = new express();
 
