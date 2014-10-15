@@ -75,4 +75,4 @@ app.get("/", function(req, res, cb) {
 
 app.use("/courses", new achilles.Service(models.Course));
 
-app.listen(5000);
+app.listen(process.env.PORT || 5000);
