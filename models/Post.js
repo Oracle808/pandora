@@ -7,6 +7,7 @@ function Post(title, content) {
 
 	this.define("title", String);
 	this.define("content", Content); 
+	this.define("date", Date);
 	
 	this.content = new Content();
 

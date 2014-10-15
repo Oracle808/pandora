@@ -107,11 +107,19 @@ function PostView(el, options) {
 	achilles.View.call(this, el);
 	this.data = options.data;
 	this.id = options.id;
+
+	this.on("click .del", this.del);
 }
 
 util.inherits(PostView, achilles.View);
 
 PostView.prototype.templateSync = require("../views/post.mustache");
+
+PostView.prototype.del = function() {
+	this.data.del(function(err) {
+		page("/course/" + this.id + "/blog");
+	}.bind(this));
+};
 
 BlogView.prototype.render = PostView.prototype.render = function() {
 	achilles.View.prototype.render.call(this);
@@ -122,7 +130,7 @@ BlogView.prototype.render = PostView.prototype.render = function() {
 
 function CreatePostView(el, options) {
 	achilles.View.call(this, el);
-	this.model = new models.Post();
+	this.model = options.model;
 	this.bind(".title", "title");
 	this.delegate(".content", "content", new Editor());
 	this.on("click .submit", this.submit.bind(this));
@@ -135,6 +143,9 @@ CreatePostView.prototype.submit = function(e) {
 	e.preventDefault();
 	console.log(this.model);
 	this.error = false;
+	if(!this.model.date) {
+		this.model.date = new Date(Date.now());
+	}
 	var y = new models.Course();
 	y._id = this.id;
 	y.posts = [this.model];
@@ -174,11 +185,17 @@ window.onload = function() {
 		});
 	});
 	page("/course/:course/blog/create", function(e) {
-		new CreatePostView(document.querySelector(".course"), {id:e.params.course});
+		new CreatePostView(document.querySelector(".course"), {id:e.params.course, model: new models.Post()});
 	});
 	page("/course/:course/blog/:post", function(e) {
 		models.Course.getById(e.params.course, function(err, doc) {
-			new PostView(document.querySelector(".course"), {data: doc.posts[e.params.index], id:doc._id});
+			new PostView(document.querySelector(".course"), {data: doc.posts[e.params.post], id:doc._id});
+		});
+	});
+	page("/course/:course/blog/:post/edit", function(e) {
+		console.log("here");
+		models.Course.getById(e.params.course, function(err, doc) {
+			new CreatePostView(document.querySelector(".course"), {model: doc.posts[e.params.post], id:doc._id});
 		});
 	});
 	page();

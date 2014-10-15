@@ -45,3 +45,8 @@ body {
 .editor-preview {
 	font-size:20px;
 }
+
+.blog-post-meta {
+	margin-bottom:20px;
+	color:#999;
+}

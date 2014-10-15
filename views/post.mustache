@@ -9,7 +9,18 @@
   </div>
   {{#data}}
 	<div class="panel-body">
+	  <div class="row">
+		<div class="col-md-offset-10 col-md-1">
+		  <button type="button" class="btn btn-sm btn-warning del">Delete</button>
+		</div>
+		<div class="col-md-1">
+		  <a href="/course/{{id}}/blog/{{index}}/edit" class="btn btn-sm btn-info">Edit</a>
+		</div>
+	  </div>  
 	  <h1>{{title}}</h1>
+	  <div class="blog-post-meta">
+		<i class="fa fa-clock-o"></i> Posted on {{date}}
+	  </div>
 	  <p>{{& content.html}}
 	</div>
   {{/data}}
