@@ -49,11 +49,11 @@
 
   <div class="col-md-12">
 	{{#rich}}
-	  <div contenteditable="true" class="editor-rich"></div>
+	  <div contenteditable="true" class="editor-rich">{{model.data}}</div>
 	{{/rich}}
 	{{^rich}}
 	  {{#editorOpen}}
-		<div contenteditable="true" class="editor-latex"></div>
+		<div contenteditable="true" class="editor-latex">{{model.data}}</div>
 	  {{/editorOpen}}
 	  {{^editorOpen}}
 		<div class="preview editor-preview">
