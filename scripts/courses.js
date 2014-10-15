@@ -159,7 +159,7 @@ CreatePostView.prototype.submit = function(e) {
 
 CreatePostView.prototype.templateSync = require("../views/createPost.mustache");
 
-models.Course.connection = new achilles.Connection("http://localhost:5000/courses");
+models.Course.connection = new achilles.Connection(window.location.host + "/courses");
 
 window.onload = function() {
 	var main = document.querySelector("main");
