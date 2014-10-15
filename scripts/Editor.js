@@ -1,6 +1,6 @@
 var achilles = require("achilles");
 var util = require("util");
-var CodeBox = require("./codebox");
+var CodeBox = require("./CodeBox");
 var Content = require("../models/Content");
 
 var EditorModes = {};
