@@ -159,6 +159,27 @@ CreatePostView.prototype.submit = function(e) {
 
 CreatePostView.prototype.templateSync = require("../views/createPost.mustache");
 
+function ListQuizView(el, options) {
+	achilles.View.call(this, el, options);
+	this.title = options.title;
+	this.data = options.data;
+	this.section = options.section;
+	this.id = options.id;
+}
+
+util.inherits(ListQuizView, achilles.View);
+
+ListQuizView.prototype.templateSync = require("../views/listQuiz.mustache");
+
+function CreateVocabQuizView(el, options) {
+	achilles.View.call(this, el, options);
+	this.id = options.id;
+}
+
+util.inherits(CreateVocabQuizView, achilles.View);
+
+CreateVocabQuizView.prototype.templateSync = require("../views/createVocabQuiz.mustache");
+
 models.Course.connection = new achilles.Connection(window.location.protocol + "//" + window.location.host + "/courses");
 
 window.onload = function() {
@@ -196,6 +217,21 @@ window.onload = function() {
 		console.log("here");
 		models.Course.getById(e.params.course, function(err, doc) {
 			new CreatePostView(document.querySelector(".course"), {model: doc.posts[e.params.post], id:doc._id});
+		});
+	});
+	page("/course/:course/quizzes", function(e) {
+		models.Course.getById(e.params.course, function(err, doc) {
+			new ListQuizView(document.querySelector(".course"), {data: doc.quizzes, id:doc._id, section:"quizzes", title:"Quizzes"});
+		});
+	});
+	page("/course/:course/vocab_quizzes", function(e) {
+		models.Course.getById(e.params.course, function(err, doc) {
+			new ListQuizView(document.querySelector(".course"), {data: doc.vocab_quizzes, id:doc._id, section:"vocab_quizzes", title:"Vocabulary Quizzes"});
+		});
+	});
+	page("/course/:course/vocab_quizzes/create", function(e) {
+		models.Course.getById(e.params.course, function(err, doc) {
+			new CreateVocabQuizView(document.querySelector(".course"), {id:doc._id});
 		});
 	});
 	page();
