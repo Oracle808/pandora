@@ -2,10 +2,14 @@
   "name": "Pandora2",
   "version": "2.0.0-alpha.11",
   "description": "The world's most advanced virtual learning environment",
+  "repository": {
+	"type":"git",
+	"url":"git://github.com/TheMuses/pandora.git"
+  }
   "main": "app.js",
   "scripts": {
     "start": "node app",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\""
   },
   "keywords": [
     "vle",
