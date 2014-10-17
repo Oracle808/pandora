@@ -3,8 +3,8 @@
   "version": "2.0.0-alpha.11",
   "description": "The world's most advanced virtual learning environment",
   "repository": {
-	"type":"git",
-	"url":"git://github.com/TheMuses/pandora.git"
+    "type": "git",
+    "url": "git://github.com/TheMuses/pandora.git"
   },
   "main": "app.js",
   "scripts": {
@@ -21,7 +21,7 @@
   "author": "Hashan Punchihewa <hashan.punchihewa@gmail.com>",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "achilles": "^0.23.16",
+    "achilles": "^0.23.17",
     "achilles-mongodb": "^0.2.6",
     "body-parser": "~1.5.2",
     "browserify-middleware": "~3.0.1",
