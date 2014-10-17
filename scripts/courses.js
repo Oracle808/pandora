@@ -38,7 +38,7 @@ function CreateView(el, model) {
 	this.fields = [];
 	this.nova = new model();
 	Object.keys(this.nova._type).forEach(function(key) {
-		if(this.nova._type[key] === String && key != "_id") {
+		if(this.nova._type[key] === String && key !== "_id") {
 			var type = "text";
 		} else {
 			return;
