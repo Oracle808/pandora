@@ -163,6 +163,7 @@ function ListQuizView(el, options) {
 	achilles.View.call(this, el, options);
 	this.title = options.title;
 	this.data = options.data;
+	console.log(this.data);
 	this.section = options.section;
 	this.id = options.id;
 }
@@ -209,13 +210,38 @@ CreateVocabQuizView.prototype.templateSync = require("../views/createVocabQuiz.m
 CreateVocabQuizView.prototype.submit = function() {
 	var nova = new models.Course();
 	nova._id = this.id;
-	nova.vocabQuizzes.push(this.model)
+	nova.vocabQuizzes.push(this.model);
 	this.model.save(function(err) {
 		if(err) {
 			throw err;
 		}
 		page("/course/" + this.id + "/vocab_quizzes");
 	}.bind(this));
+};
+
+function VocabQuiz(el, options) {
+	achilles.View.call(this, el);
+	this.data = options.data;
+	this.id = options.id;
+	this.on("keyup input", this.changeInput.bind(this));
+};
+
+util.inherits(VocabQuiz, achilles.View);
+
+VocabQuiz.prototype.templateSync = require("../views/vocabQuiz.mustache");
+
+VocabQuiz.prototype.changeInput = function(e) {
+	if(e.target.dataset.answer.split(",").indexOf(e.target.value) !== -1) {
+		e.target.classList.add("correct");
+		e.target.classList.remove("incorrect");
+		e.target.blur();
+		if(e.target.nextSibling && e.target.nextSibling.nextSibling) {
+			e.target.nextElementSibling.nextElementSibling.focus();
+		}
+	} else if(e.target.value != "") {
+		e.target.classList.add("incorrect");
+		e.target.classList.remove("correct");
+	}
 };
 
 models.Course.connection = new achilles.Connection(window.location.protocol + "//" + window.location.host + "/courses");
@@ -270,6 +296,11 @@ window.onload = function() {
 	page("/course/:course/vocab_quizzes/create", function(e) {
 		models.Course.getById(e.params.course, function(err, doc) {
 			new CreateVocabQuizView(document.querySelector(".course"), {id:doc._id, model:new models.VocabQuiz()});
+		});
+	});
+	page("/course/:course/vocab_quizzes/:quiz", function(e) {
+		models.Course.getById(e.params.course, function(err, doc) {
+			new VocabQuiz(document.querySelector(".course"), {id:doc._id, data:doc.vocabQuizzes[e.params.quiz]});
 		});
 	});
 	page();
