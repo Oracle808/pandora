@@ -43,7 +43,7 @@ Sipmly by clicking the button above, you will be able to setup a live server on 
  - *A database user is required to connect to this database.* **Click here** *to create a new one.*
 - Click the link and fill in **DB Username** and **DB Password** fields
 - Finally, in `secrets.js` instead of `db: 'localhost'`, use the following URI with your credentials:
- - `db: 'mongodb://USERNAME:PASSWORD@ds027479.mongolab.com:27479/DATABASE_NAME'`
+ - `db: "mongodb://USERNAME:PASSWORD@ds027479.mongolab.com:27479/DATABASE_NAME"`
 
 > **:exclamation:Note:** As an alternative to MongoLab, there is also [MongoHQ](http://www.mongohq.com/home).
 
