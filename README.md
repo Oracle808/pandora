@@ -49,7 +49,7 @@ Sipmly by clicking the button above, you will be able to setup a live server on 
 
 ---
 ### Local Deployment
-- Clone this repository (or a fork of it): `git clone https://github.com/TheMuses/pandora`
-- Go into the folder
+- Clone this repository: `git clone https://github.com/TheMuses/pandora`
+- Go into new folder
 - Install dependencies: `npm install`
 - Start server: `npm start`
