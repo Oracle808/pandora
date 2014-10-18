@@ -61,7 +61,6 @@ EditorController.prototype.updateFont = function(e) {
 EditorController.prototype.updateFormat = function(e) {
 	document.execCommand(e.target.value);
 	e.target.classList.toggle("active");
-	e.preventDefault();
 };
 
 EditorController.prototype.reconfigure = function() {

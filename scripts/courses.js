@@ -171,14 +171,52 @@ util.inherits(ListQuizView, achilles.View);
 
 ListQuizView.prototype.templateSync = require("../views/listQuiz.mustache");
 
+function VocabQuestion(el) {
+	achilles.View.call(this, document.createElement("tr"));
+	this.bind(".question", "question");
+	this.bind(".answer", "answer");
+	this.on("click .remove", this.remove.bind(this));
+}
+
+util.inherits(VocabQuestion, achilles.View);
+
+VocabQuestion.prototype.remove = function(e) {
+	e.preventDefault();
+	this.model.remove();
+};
+
+VocabQuestion.prototype.templateSync = require("../views/vocabQuestion.mustache");
+
 function CreateVocabQuizView(el, options) {
-	achilles.View.call(this, el, options);
+	achilles.View.call(this, el);
 	this.id = options.id;
+	this.model = options.model;
+	this.bind(".title", "title");
+	this.on("click .create-question", this.addQuestion.bind(this));
+	this.on("click .submit", this.submit.bind(this));
+
+	this.delegate(".questions", "questions", new achilles.Collection(VocabQuestion));
 }
 
 util.inherits(CreateVocabQuizView, achilles.View);
 
+CreateVocabQuizView.prototype.addQuestion = function() {
+	this.model.questions.push(new models.VocabQuestion());
+};
+
 CreateVocabQuizView.prototype.templateSync = require("../views/createVocabQuiz.mustache");
+
+CreateVocabQuizView.prototype.submit = function() {
+	var nova = new models.Course();
+	nova._id = this.id;
+	nova.vocabQuizzes.push(this.model)
+	this.model.save(function(err) {
+		if(err) {
+			throw err;
+		}
+		page("/course/" + this.id + "/vocab_quizzes");
+	}.bind(this));
+};
 
 models.Course.connection = new achilles.Connection(window.location.protocol + "//" + window.location.host + "/courses");
 
@@ -226,12 +264,12 @@ window.onload = function() {
 	});
 	page("/course/:course/vocab_quizzes", function(e) {
 		models.Course.getById(e.params.course, function(err, doc) {
-			new ListQuizView(document.querySelector(".course"), {data: doc.vocab_quizzes, id:doc._id, section:"vocab_quizzes", title:"Vocabulary Quizzes"});
+			new ListQuizView(document.querySelector(".course"), {data: doc.vocabQuizzes, id:doc._id, section:"vocab_quizzes", title:"Vocabulary Quizzes"});
 		});
 	});
 	page("/course/:course/vocab_quizzes/create", function(e) {
 		models.Course.getById(e.params.course, function(err, doc) {
-			new CreateVocabQuizView(document.querySelector(".course"), {id:doc._id});
+			new CreateVocabQuizView(document.querySelector(".course"), {id:doc._id, model:new models.VocabQuiz()});
 		});
 	});
 	page();

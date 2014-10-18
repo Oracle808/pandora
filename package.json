@@ -1,6 +1,6 @@
 {
   "name": "Pandora2",
-  "version": "2.0.0-alpha.11",
+  "version": "2.0.0-alpha.12",
   "description": "The world's most advanced virtual learning environment",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   "author": "Hashan Punchihewa <hashan.punchihewa@gmail.com>",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "achilles": "^0.23.17",
+    "achilles": "^0.23.31",
     "achilles-mongodb": "^0.2.6",
     "body-parser": "~1.5.2",
     "browserify-middleware": "~3.0.1",

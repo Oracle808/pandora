@@ -19,9 +19,11 @@ require.extensions[".mustache"] = function(module, filename) {
 
 var mongodb = require("achilles-mongodb");
 
+var secrets = require("./config/secrets");
+
 achilles.User.connection 
 	= models.Course.connection
-	= new mongodb.Connection(process.env.MONGOLAB_URI || "mongodb://localhost:27017/pandora");
+	= new mongodb.Connection(secrets.db);
 
 var app = new express();
 

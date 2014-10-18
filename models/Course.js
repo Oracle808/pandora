@@ -3,7 +3,7 @@ var achilles = require("achilles");
 var Post = require("./Post");
 var Quiz = require("./Quiz");
 var Content = require("./Content");
-var VocabQuiz = require("./VocabQuiz");
+var VocabQuiz = require("./VocabQuiz").VocabQuiz;
 
 function Page(title) {
 	achilles.Model.call(this);

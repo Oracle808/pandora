@@ -1,13 +1,10 @@
 var util = require("util");
 var achilles = require("achilles");
 
-function VocabQuestion(title, answer) {
+function VocabQuestion() {
 	achilles.Model.call(this);
-	this.define("title", String);
+	this.define("question", String);
 	this.define("answer", String);
-	
-	this.title = title;
-	this.answer = answer;
 }
 
 util.inherits(VocabQuestion, achilles.Model);
@@ -17,8 +14,11 @@ function VocabQuiz(type, data) {
 	this.define("title", String);
 	this.define("questions", [VocabQuestion]);
 	this.define("randomise_questions", Boolean);
+
+	this.questions = [];
 }
 
 util.inherits(VocabQuiz, achilles.Model);
 
-module.exports = VocabQuiz;
+module.exports.VocabQuestion = VocabQuestion;
+module.exports.VocabQuiz = VocabQuiz;
