@@ -77,6 +77,8 @@ app.get("/", function(req, res, cb) {
 
 app.use("/courses", new achilles.Service(models.Course));
 
-app.listen(app.set("port", process.env.PORT || 5000), function () {
-	console.log("Pandora listening" + app.get("port"));
+app.set("port", process.env.PORT || 5000);
+
+app.listen(function () {
+	console.log("Pandora listening at port" + app.get("port"));
 });
