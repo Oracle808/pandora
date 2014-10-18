@@ -1,7 +1,8 @@
 var achilles = require("achilles");
 var mongodb = require("achilles-mongodb");
+var secrets = require("./config/secrets");
 
-achilles.User.connection = new mongodb.Connection(process.env.MONGOLAB_URI || "mongodb://localhost:27017/pandora");
+achilles.User.connection = new mongodb.Connection(secrets.db);
 
 var admin = new achilles.User();
 admin.name = "Admin";
