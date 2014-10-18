@@ -33,13 +33,13 @@ util.inherits(ListView, achilles.View);
 
 ListView.prototype.templateSync = require("../views/list.mustache");
 
-function CreateView(el, model) {
+function CreateView(el, Model) {
 	achilles.View.call(this, el);
 	this.fields = [];
-	this.nova = new model();
+	this.nova = new Model();
 	Object.keys(this.nova._type).forEach(function(key) {
 		if(this.nova._type[key] === String && key !== "_id") {
-			var type = "text";
+			//var type = "text";
 		} else {
 			return;
 		}
@@ -116,7 +116,7 @@ util.inherits(PostView, achilles.View);
 PostView.prototype.templateSync = require("../views/post.mustache");
 
 PostView.prototype.del = function() {
-	this.data.del(function(err) {
+	this.data.del(function() {
 		page("/course/" + this.id + "/blog");
 	}.bind(this));
 };

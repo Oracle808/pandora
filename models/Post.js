@@ -2,7 +2,7 @@ var util = require("util");
 var achilles = require("achilles");
 var Content = require("./Content");
 
-function Post(title, content) {
+function Post() {
 	achilles.Model.call(this);
 
 	this.define("title", String);
