@@ -50,3 +50,35 @@ body {
 	margin-bottom:20px;
 	color:#999;
 }
+
+.vocab-quiz *, .vocab-quiz input:focus {
+	border-right:1px solid black;
+	border-bottom:1px solid black;
+	border-left:0px;
+	border-top:0px;
+	height:30px;
+}
+
+.vocab-quiz input {
+	outline:none;
+}
+
+.vocab-quiz *:nth-child(-6+n) {
+	border-top:1px solid black;
+}
+
+.vocab-quiz div {
+	padding-top:4px;
+}
+
+.vocab-quiz *:nth-child(6n) {
+	border-right-width: 0px;
+}
+
+.vocab-quiz input.correct {
+	background-color:lightgreen;
+}
+
+.vocab-quiz input.incorrect {
+	background-color:#ef3d47;
+}
