@@ -14,7 +14,7 @@ if (window.getSelection && document.createRange) {
 		return {
 			start: start,
 			end: start + range.toString().length
-	    };
+		};
     };
 
     restoreSelection = function(containerEl, savedSel) {
@@ -24,7 +24,7 @@ if (window.getSelection && document.createRange) {
 		var nodeStack = [containerEl], node, foundStart = false, stop = false;
 
 		while (!stop && (node = nodeStack.pop())) {
-			if (node.nodeType == 3) {
+			if (node.nodeType === 3) {
 				var nextCharIndex = charIndex + node.length;
 				if (!foundStart && savedSel.start >= charIndex && savedSel.start <= nextCharIndex) {
 					range.setStart(node, savedSel.start - charIndex);
@@ -36,12 +36,12 @@ if (window.getSelection && document.createRange) {
 				}
 				charIndex = nextCharIndex;
 			} else {
-			    var i = node.childNodes.length;
-			    while (i--) {
-				    nodeStack.push(node.childNodes[i]);
+				var i = node.childNodes.length;
+				while (i--) {
+					nodeStack.push(node.childNodes[i]);
 				}
 			}
-	    }
+		}
 
 		var sel = window.getSelection();
 		sel.removeAllRanges();
@@ -119,12 +119,13 @@ CodeBox.prototype.update = function(e) {
 };
 
 CodeBox.prototype.template = function(context, cb) {
+	var d;
 	if(this.el === document.activeElement) {
-		var d = saveSelection(this.el);
+		d = saveSelection(this.el);
 	}
 	var data = this.value;
 
-	["keyword", "string", "parameter", "comment"].forEach((function(token) {
+	["keyword", "string", "parameter", "comment"].forEach(function(token) {
 		if(this.mode[token]) {
 			this.mode[token].forEach(function(regex) {
 				regex = new RegExp("(" + regex.source + ")" + /(?![^<>]*>)/.source, "g"); // This ensures text inside tags isn't matches
@@ -133,7 +134,7 @@ CodeBox.prototype.template = function(context, cb) {
 				});
 			});
 		}
-	}).bind(this));
+	}.bind(this));
 
 	data = data.replace(/\n/g, "</div><div>");
 	data = data.replace(/\t/g + "     ");

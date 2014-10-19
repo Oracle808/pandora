@@ -33,13 +33,14 @@ util.inherits(ListView, achilles.View);
 
 ListView.prototype.templateSync = require("../views/list.mustache");
 
-function CreateView(el, model) {
+function CreateView(el, Model) {
 	achilles.View.call(this, el);
 	this.fields = [];
-	this.nova = new model();
+	this.nova = new Model();
 	Object.keys(this.nova._type).forEach(function(key) {
-		if(this.nova._type[key] === String && key != "_id") {
-			var type = "text";
+		var type;
+		if(this.nova._type[key] === String && key !== "_id") {
+			type = "text";
 		} else {
 			return;
 		}
@@ -116,7 +117,7 @@ util.inherits(PostView, achilles.View);
 PostView.prototype.templateSync = require("../views/post.mustache");
 
 PostView.prototype.del = function() {
-	this.data.del(function(err) {
+	this.data.del(function() {
 		page("/course/" + this.id + "/blog");
 	}.bind(this));
 };
@@ -224,7 +225,7 @@ function VocabQuiz(el, options) {
 	this.data = options.data;
 	this.id = options.id;
 	this.on("keyup input", this.changeInput.bind(this));
-};
+}
 
 util.inherits(VocabQuiz, achilles.View);
 
@@ -238,7 +239,7 @@ VocabQuiz.prototype.changeInput = function(e) {
 		if(e.target.nextSibling && e.target.nextSibling.nextSibling) {
 			e.target.nextElementSibling.nextElementSibling.focus();
 		}
-	} else if(e.target.value != "") {
+	} else if(e.target.value !== "") {
 		e.target.classList.add("incorrect");
 		e.target.classList.remove("correct");
 	}

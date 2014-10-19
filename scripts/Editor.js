@@ -7,7 +7,7 @@ var EditorModes = {};
 EditorModes.RichText = "rich-text-editor";
 EditorModes.LaTeX = "latex";
 
-var EditorController = function(el, value) {
+var EditorController = function(el) {
 	achilles.View.call(this, el);
 
 	// Property Declerations
@@ -23,9 +23,9 @@ var EditorController = function(el, value) {
 	this.on("click .open-tab", this.openTab.bind(this)); // Open Tab
 	this.on("change:model", this.setupModel.bind(this));
 
-	this.on("render", (function() {
+	this.on("render", function() {
 		console.log(this.el);
-	}).bind(this));
+	}.bind(this));
 
 	this.bind(".editor-rich", "data");
 	this.bind(".editor-mode", "type");
@@ -64,13 +64,13 @@ EditorController.prototype.updateFormat = function(e) {
 };
 
 EditorController.prototype.reconfigure = function() {
-	["bold", "underline", "italic", "insertOrderedList", "insertUnorderedList"].forEach((function(option) {
+	["bold", "underline", "italic", "insertOrderedList", "insertUnorderedList"].forEach(function(option) {
 		if(document.queryCommandState(option)) {
 			this.el.querySelector("[value=\"" + option + "\"]").classList.add("active");
 		} else {
 			this.el.querySelector("[value=\"" + option + "\"]").classList.remove("active");
 		}
-	}).bind(this));
+	}.bind(this));
 };
 
 EditorController.prototype.openTab = function(e) {
