@@ -38,8 +38,9 @@ function CreateView(el, Model) {
 	this.fields = [];
 	this.nova = new Model();
 	Object.keys(this.nova._type).forEach(function(key) {
+		var type = "";
 		if(this.nova._type[key] === String && key !== "_id") {
-			//var type = "text";
+			type = "text";
 		} else {
 			return;
 		}
@@ -224,7 +225,7 @@ function VocabQuiz(el, options) {
 	this.data = options.data;
 	this.id = options.id;
 	this.on("keyup input", this.changeInput.bind(this));
-};
+}
 
 util.inherits(VocabQuiz, achilles.View);
 
@@ -238,7 +239,7 @@ VocabQuiz.prototype.changeInput = function(e) {
 		if(e.target.nextSibling && e.target.nextSibling.nextSibling) {
 			e.target.nextElementSibling.nextElementSibling.focus();
 		}
-	} else if(e.target.value != "") {
+	} else if(e.target.value !== "") {
 		e.target.classList.add("incorrect");
 		e.target.classList.remove("correct");
 	}
