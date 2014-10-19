@@ -9,7 +9,7 @@ function VocabQuestion() {
 
 util.inherits(VocabQuestion, achilles.Model);
 
-function VocabQuiz(type, data) {
+function VocabQuiz() {
 	achilles.Model.call(this);
 	this.define("title", String);
 	this.define("questions", [VocabQuestion]);

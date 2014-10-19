@@ -21,9 +21,9 @@ var mongodb = require("achilles-mongodb");
 
 var secrets = require("./config/secrets");
 
-achilles.User.connection
-	= models.Course.connection
-	= new mongodb.Connection(secrets.db);
+achilles.User.connection 
+= models.Course.connection
+= new mongodb.Connection(secrets.db);
 
 var app = new express();
 
@@ -77,4 +77,8 @@ app.get("/", function(req, res, cb) {
 
 app.use("/courses", new achilles.Service(models.Course));
 
-app.listen(process.env.PORT || 5000);
+app.set("port", process.env.PORT || 5000);
+
+app.listen(app.get("port"), function () {
+	console.log("Pandora listening at port" + app.get("port"));
+});
