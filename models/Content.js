@@ -7,12 +7,11 @@ function Content() {
 
 	this.define("type", String); // "rich", "latex"
 	this.define("data", String);
-	
+
 	this.type = "rich-text-editor";
 
 	Object.defineProperty(this, "html", {
 		get: function() {
-			console.log("fsdfds");
 			if(this.type === "rich-text-editor") {
 				return this.data;
 			} else {
@@ -24,6 +23,9 @@ function Content() {
 	Object.defineProperty(this, "preview", {
 		get: function() {
 			console.log("fsdfds");
+			if(!this.data) {
+				return "";
+			}
 			if(this.type === "rich-text-editor") {
 				return truncate(this.data, 100);
 			} else {

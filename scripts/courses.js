@@ -208,9 +208,13 @@ CreateVocabQuizView.prototype.addQuestion = function() {
 CreateVocabQuizView.prototype.templateSync = require("../views/createVocabQuiz.mustache");
 
 CreateVocabQuizView.prototype.submit = function() {
-	var nova = new models.Course();
-	nova._id = this.id;
-	nova.vocabQuizzes.push(this.model);
+	console.log(this.model);
+	if(!this.model.container) {
+		console.log("here");
+		var nova = new models.Course();
+		nova._id = this.id;
+		nova.vocabQuizzes = [this.model];
+	}
 	this.model.save(function(err) {
 		if(err) {
 			throw err;
@@ -224,6 +228,8 @@ function VocabQuiz(el, options) {
 	this.data = options.data;
 	this.id = options.id;
 	this.on("keyup input", this.changeInput.bind(this));
+	this.on("click .reset", this.reset.bind(this));
+	this.on("click .answers", this.revealAnswers.bind(this));
 };
 
 util.inherits(VocabQuiz, achilles.View);
@@ -231,7 +237,7 @@ util.inherits(VocabQuiz, achilles.View);
 VocabQuiz.prototype.templateSync = require("../views/vocabQuiz.mustache");
 
 VocabQuiz.prototype.changeInput = function(e) {
-	if(e.target.dataset.answer.split(",").indexOf(e.target.value) !== -1) {
+	if(e.target.dataset.answer.toLowerCase().split(",").indexOf(e.target.value.toLowerCase()) !== -1) {
 		e.target.classList.add("correct");
 		e.target.classList.remove("incorrect");
 		e.target.blur();
@@ -242,6 +248,25 @@ VocabQuiz.prototype.changeInput = function(e) {
 		e.target.classList.add("incorrect");
 		e.target.classList.remove("correct");
 	}
+};
+
+VocabQuiz.prototype.revealAnswers = function() {
+		Array.prototype.slice.call(this.el.querySelectorAll("input")).forEach(function(el) {
+			if(!el.classList.contains("correct")) {
+				el.classList.add("incorrect");
+			}
+			el.value = el.dataset.answer;
+			el.readOnly = true;
+		});
+};
+
+VocabQuiz.prototype.reset = function() {
+		Array.prototype.slice.call(this.el.querySelectorAll("input")).forEach(function(el) {
+			el.value = "";
+			el.classList.remove("correct")
+			el.classList.remove("incorrect");
+			el.readOnly = false;
+		});
 };
 
 models.Course.connection = new achilles.Connection(window.location.protocol + "//" + window.location.host + "/courses");
@@ -301,6 +326,11 @@ window.onload = function() {
 	page("/course/:course/vocab_quizzes/:quiz", function(e) {
 		models.Course.getById(e.params.course, function(err, doc) {
 			new VocabQuiz(document.querySelector(".course"), {id:doc._id, data:doc.vocabQuizzes[e.params.quiz]});
+		});
+	});
+	page("/course/:course/vocab_quizzes/:quiz/edit", function(e) {
+		models.Course.getById(e.params.course, function(err, doc) {
+			new CreateVocabQuizView(document.querySelector(".course"), {id:doc._id, model:doc.vocabQuizzes[e.params.quiz]});
 		});
 	});
 	page();

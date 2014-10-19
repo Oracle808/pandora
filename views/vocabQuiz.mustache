@@ -1,0 +1,32 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+	Vocabulary Quizzes
+	<div class="pull-right">
+	  <a href="/course/{{id}}/vocab_quizzes">
+		<i class="fa fa-times"></i>
+	  </a>
+	</div>
+  </div>
+  <div class="panel-body">
+	{{#data}}
+    <div class="row">
+      <div class="col-md-offset-8 col-md-1">
+        <a href="/course/{{id}}/vocab_quizzes/{{index}}/edit" class="btn btn-sm btn-info pull-right">Edit</a>
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="btn btn-sm btn-warning reset">Reset</button>
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-sm btn-danger answers">Reveal Answers</button>
+      </div>
+    </div>
+	  <h1>{{title}}</h1>
+	  <div class="row vocab-quiz">
+		{{#questions}}
+		  <div class="col-md-2">{{question}}</div>
+		  <input type="text" class="col-md-2" data-answer="{{answer}}">
+		{{/questions}}
+	  </div>
+	{{/data}}
+  </div>
+</div>

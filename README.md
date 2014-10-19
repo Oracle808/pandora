@@ -7,7 +7,7 @@ Modules
 -------
 
 - Blogs 
-- Vocab Quizzes (In Progress)
+- Vocab Quizzes
 - Quizzes (To Be Commenced)
 - File Uploads (To Be Commenced)
 - File Downloads (To Be Commenced)

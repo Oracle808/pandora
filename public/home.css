@@ -63,12 +63,13 @@ body {
 	outline:none;
 }
 
-.vocab-quiz *:nth-child(-6+n) {
+.vocab-quiz *:nth-child(-n+6), .vocab-quiz *:nth-child(-n+6):focus {
 	border-top:1px solid black;
 }
 
 .vocab-quiz div {
 	padding-top:4px;
+	background-color:goldenrod;
 }
 
 .vocab-quiz *:nth-child(6n) {
