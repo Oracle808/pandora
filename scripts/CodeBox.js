@@ -119,7 +119,7 @@ CodeBox.prototype.update = function(e) {
 };
 
 CodeBox.prototype.template = function(context, cb) {
-	var d = "";
+	var d;
 	if(this.el === document.activeElement) {
 		d = saveSelection(this.el);
 	}
