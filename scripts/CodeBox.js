@@ -119,8 +119,9 @@ CodeBox.prototype.update = function(e) {
 };
 
 CodeBox.prototype.template = function(context, cb) {
+	var d = "";
 	if(this.el === document.activeElement) {
-		//var d = saveSelection(this.el);
+		d = saveSelection(this.el);
 	}
 	var data = this.value;
 
