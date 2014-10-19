@@ -6,18 +6,10 @@ function Post() {
 	achilles.Model.call(this);
 
 	this.define("title", String);
-	this.define("content", Content); 
+	this.define("content", Content);
 	this.define("date", Date);
-	
-	this.content = new Content();
 
-	Object.defineProperty(this, "index", {
-		get: function() {
-			console.log(this.container);
-			console.log(this);
-			return this.container.indexOf(this);
-		}
-	});
+	this.content = new Content();
 }
 
 util.inherits(Post, achilles.Model);

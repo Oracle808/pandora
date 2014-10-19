@@ -147,9 +147,11 @@ CreatePostView.prototype.submit = function(e) {
 	if(!this.model.date) {
 		this.model.date = new Date(Date.now());
 	}
-	var y = new models.Course();
-	y._id = this.id;
-	y.posts = [this.model];
+	if(!this.model.container) {
+		var y = new models.Course();
+		y._id = this.id;
+		y.posts = [this.model];
+	}
 	this.model.save(function(err) {
 		if(err) {
 			this.error = err;

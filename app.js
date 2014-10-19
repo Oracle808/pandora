@@ -21,7 +21,7 @@ var mongodb = require("achilles-mongodb");
 
 var secrets = require("./config/secrets");
 
-achilles.User.connection 
+achilles.User.connection
 = models.Course.connection
 = new mongodb.Connection(secrets.db);
 

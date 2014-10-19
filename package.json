@@ -21,8 +21,8 @@
   "author": "Hashan Punchihewa <hashan.punchihewa@gmail.com>",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "achilles": "^0.23.33",
-    "achilles-mongodb": "^0.2.6",
+    "achilles": "^0.23.35",
+    "achilles-mongodb": "^0.2.7",
     "body-parser": "~1.5.2",
     "browserify-middleware": "~3.0.1",
     "browserify-mustache": "0.0.3",

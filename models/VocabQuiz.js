@@ -16,14 +16,6 @@ function VocabQuiz() {
 	this.define("randomise_questions", Boolean);
 
 	this.questions = [];
-
-	Object.defineProperty(this, "index", {
-		get: function() {
-			console.log(this.container);
-			console.log(this);
-			return this.container.indexOf(this);
-		}
-	});
 }
 
 util.inherits(VocabQuiz, achilles.Model);
