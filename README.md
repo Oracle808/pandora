@@ -3,15 +3,6 @@ pandora
 
 The world's most advanced V.L.E. - Version 2.0
 
-Modules
--------
-
-- Blogs 
-- Vocab Quizzes
-- Quizzes (To Be Commenced)
-- File Uploads (To Be Commenced)
-- File Downloads (To Be Commenced)
-
 Deployment
 -------
 
