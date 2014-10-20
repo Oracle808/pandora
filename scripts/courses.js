@@ -298,7 +298,11 @@ window.onload = function() {
 		});
 	});
 	page("/course/:course/blog/create", function(e) {
-		new CreatePostView(document.querySelector(".course"), {id:e.params.course, model: new models.Post()});
+		models.Course.getById(e.params.course, function(err, doc) {
+			var m = new models.Post();
+			doc.posts.push(m);
+			new CreatePostView(document.querySelector(".course"), {id:e.params.course, model: m});
+		});
 	});
 	page("/course/:course/blog/:post", function(e) {
 		models.Course.getById(e.params.course, function(err, doc) {
@@ -323,7 +327,9 @@ window.onload = function() {
 	});
 	page("/course/:course/vocab_quizzes/create", function(e) {
 		models.Course.getById(e.params.course, function(err, doc) {
-			new CreateVocabQuizView(document.querySelector(".course"), {id:doc._id, model:new models.VocabQuiz()});
+			var m = new models.VocabQuiz();
+			doc.vocabQuizzes.push(m);
+			new CreateVocabQuizView(document.querySelector(".course"), {id:doc._id, model:m});
 		});
 	});
 	page("/course/:course/vocab_quizzes/:quiz", function(e) {
