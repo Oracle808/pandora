@@ -63,6 +63,7 @@ app.all("*", function(req, res, cb) {
 	} else {
 		res.redirect("/login");
 	}
+
 });
 
 var courses = require("./views/courses.mustache");

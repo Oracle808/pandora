@@ -233,11 +233,18 @@ function VocabQuiz(el, options) {
 	this.on("keyup input", this.changeInput.bind(this));
 	this.on("click .reset", this.reset.bind(this));
 	this.on("click .answers", this.revealAnswers.bind(this));
+	this.on("click .del", this.del.bind(this));
 }
 
 util.inherits(VocabQuiz, achilles.View);
 
 VocabQuiz.prototype.templateSync = require("../views/vocabQuiz.mustache");
+
+VocabQuiz.prototype.del = function() {
+	this.data.del(function() {
+		page("/course/" + this.id + "/vocab_quizzes");
+	}.bind(this));
+};
 
 VocabQuiz.prototype.changeInput = function(e) {
 	if(e.target.dataset.answer.toLowerCase().split(",").indexOf(e.target.value.toLowerCase()) !== -1) {
