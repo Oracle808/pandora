@@ -1,6 +1,6 @@
 var achilles = require("achilles");
 var mongodb = require("achilles-mongodb");
-var secrets = require("./config/secrets");
+var secrets = require("../config/secrets");
 
 achilles.User.connection = new mongodb.Connection(secrets.db);
 
