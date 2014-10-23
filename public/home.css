@@ -83,3 +83,10 @@ body {
 .vocab-quiz input.incorrect {
 	background-color:#ef3d47;
 }
+
+.preview-latex {
+	overflow: hidden;
+	white-space: nowrap;
+  text-overflow:ellipsis;
+	height:30px;
+}

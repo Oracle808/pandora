@@ -9,7 +9,9 @@ MathJax.Hub.Config({
 		displayMath: [],
 		inlineMath: []
 	},
-	showMathMenu:false
+	showMathMenu:false,
+	"HTML-CSS": { linebreaks: { automatic: true } },
+         SVG: { linebreaks: { automatic: true } }
 });
 
 function ListView(el, data) {
@@ -124,9 +126,7 @@ PostView.prototype.del = function() {
 
 BlogView.prototype.render = PostView.prototype.render = function() {
 	achilles.View.prototype.render.call(this);
-	Array.prototype.slice.call(this.el.querySelectorAll(".preview-latex")).forEach(function(y) {
-		MathJax.Hub.Queue(["Typeset", MathJax.Hub, y]);
-	});
+	MathJax.Hub.Queue(["Typeset", MathJax.Hub, this.el]);
 };
 
 function CreatePostView(el, options) {

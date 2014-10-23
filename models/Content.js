@@ -29,7 +29,7 @@ function Content() {
 			if(this.type === "rich-text-editor") {
 				return truncate(this.data, 100);
 			} else {
-				return truncate('<script type="math/tex">' + this.data + '</script>', 100);
+				return '<script type="math/tex">' + this.data + '</script>';
 			}
 		}
 	});
