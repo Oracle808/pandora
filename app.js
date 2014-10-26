@@ -9,6 +9,7 @@ var cookieParser = require("cookie-parser");
 var session = require("express-session");
 var models = require("./models");
 var browserify = require("browserify-middleware");
+var morgan = require("morgan");
 
 require.extensions[".mustache"] = function(module, filename) {
 	var template = hogan.compile(fs.readFileSync(filename).toString());
@@ -27,6 +28,7 @@ achilles.User.connection
 
 var app = new express();
 
+app.use(morgan("short"));
 app.use(serveStatic("./public", {
 	extensions: ["html"]
 }));

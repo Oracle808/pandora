@@ -35,49 +35,28 @@ util.inherits(ListView, achilles.View);
 
 ListView.prototype.templateSync = require("../views/list.mustache");
 
-function CreateView(el, Model) {
-	achilles.View.call(this, el);
-	this.fields = [];
-	this.nova = new Model();
-	Object.keys(this.nova._type).forEach(function(key) {
-		var type;
-		if(this.nova._type[key] === String && key !== "_id") {
-			type = "text";
-		} else {
-			return;
-		}
-
-		var title = key.replace(/([a-z])([A-Z])/g, '$1 $2')
-		// space before last upper in a sequence followed by lower
-			.replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3')
-		// uppercase the first character
-			.replace(/^./, function(str){ return str.toUpperCase(); });
-
-		this.fields.push({
-			key: key,
-			title: title,
-			type: type
-		});
-		this.on("keyup .control-" + key, function(e) {
-			console.log(e.target.value);
-			this.nova[key] = e.target.value;
-		});
-	}.bind(this));
+function CreateView(el) {
+	achilles.View.call(this, el.cloneNode(true));
+	el.parentNode.replaceChild(this.el, el);
+	this.model = new models.Course();
+	this.bind(".field-title", "title");
+	this.bind(".field-icon", "icon");
 	this.on("click .submit", this.submit.bind(this));
 }
 
 util.inherits(CreateView, achilles.View);
 
 CreateView.prototype.submit = function(e) {
-	console.log(this.nova);
+	this.model.icon = this.el.querySelector(".field-icon").value;
 	e.preventDefault();
 	this.error = null;
 	this.success = null;
-	this.nova.save(function(err) {
+	console.log(this.model);
+	this.model.save(function(err) {
 		if(err) {
 			this.error = err;
 		} else {
-			this.success = true;
+			page("/");
 		}
 		this.render();
 	}.bind(this));
@@ -279,6 +258,95 @@ VocabQuiz.prototype.reset = function() {
 		});
 };
 
+function Option(el) {
+	achilles.View.call(this, document.createElement("div"));
+	this.bind(".title", "title");
+	this.bind(".correct", "correct");
+}
+
+util.inherits(Option, achilles.View);
+
+Option.prototype.templateSync = require("../views/option.mustache")
+
+function Question(el, options) {
+		achilles.View.call(this, el);
+		this.model = options.model;
+
+		this.bind(".answer_type", "answer_type");
+		this.bind(".answer_text", "answer_text");
+		this.bind(".answer_number", "answer_number");
+		this.model.on("change:answer_type", this.render.bind(this));
+		this.on("click .add-option", this.addOption.bind(this));
+		this.on("click .remove", this.remove.bind(this));
+		this.delegate(".content", "content", new Editor());
+		this.delegate(".options", "options", new achilles.Collection(Option));
+}
+
+util.inherits(Question, achilles.View);
+
+Question.prototype.templateSync = require("../views/question.mustache");
+
+Question.prototype.addOption = function() {
+		this.model.options.push(new models.Option());
+};
+
+function CreateQuiz(el, options) {
+	achilles.View.call(this, el);
+	this.model = options.model;
+	this.id = options.id;
+	this.currentQuestionIndex = 0;
+
+	Object.defineProperty(this, "currentQuestion", {
+		get: function() {
+			if(!this.model.questions) {
+					return null;
+			} else if(this.currentQuestionIndex > this.model.questions.length-1) {
+				return this.model.questions[0];
+			} else {
+				return this.model.questions[this.currentQuestionIndex];
+			}
+		}
+	});
+
+	this.model.on("remove:questions", this.render.bind(this));
+	this.on("click .submit", this.submit.bind(this));
+	this.on("click .question", this.showQuestion.bind(this));
+	this.on("click .add-question", this.addQuestion.bind(this));
+	this.model.on("push:questions", this.render.bind(this));
+}
+
+util.inherits(CreateQuiz, achilles.View);
+
+CreateQuiz.prototype.showQuestion = function(e) {
+	this.currentQuestionIndex = e.target.dataset.index;
+	this.render();
+};
+
+CreateQuiz.prototype.render = function() {
+	achilles.View.prototype.render.call(this);
+	if(this.currentQuestion) {
+		console.log("here");
+		new Question(this.el.querySelector(".current_question"), {model: this.currentQuestion});
+		this.el.querySelector(".button-" + this.currentQuestion.index).classList.add("active");
+	}
+};
+
+CreateQuiz.prototype.templateSync = require("../views/createQuiz.mustache")
+
+CreateQuiz.prototype.addQuestion = function() {
+	this.currentQuestionIndex = this.model.questions.length;
+	this.model.questions.push(new models.Question());
+};
+
+CreateQuiz.prototype.submit = function() {
+	this.model.save(function(err) {
+		if(err) {
+			throw err;
+		}
+		page("/course/" + this.id + "/quizzes");
+	}.bind(this));
+};
+
 models.Course.connection = new achilles.Connection(window.location.protocol + "//" + window.location.host + "/courses");
 
 window.onload = function() {
@@ -287,15 +355,15 @@ window.onload = function() {
 		console.log("here");
 		models.Course.get(function(err, docs) {
 			console.log(docs);
-			new ListView(main, docs);
+			new ListView(document.querySelector("main"), docs);
 		});
 	});
 	page("/create", function() {
-		new CreateView(main, models.Course);
+		new CreateView(document.querySelector("main"), models.Course);
 	});
 	page("/course/:course/:section", function(e, next) {
 		models.Course.getById(e.params.course, function(err, doc) {
-			new CourseView(main, {data: doc, section: e.params.section});
+			new CourseView(document.querySelector("main"), {data: doc, section: e.params.section});
 			next();
 		});
 	});
@@ -322,11 +390,6 @@ window.onload = function() {
 			new CreatePostView(document.querySelector(".course"), {model: doc.posts[e.params.post], id:doc._id});
 		});
 	});
-	page("/course/:course/quizzes", function(e) {
-		models.Course.getById(e.params.course, function(err, doc) {
-			new ListQuizView(document.querySelector(".course"), {data: doc.quizzes, id:doc._id, section:"quizzes", title:"Quizzes"});
-		});
-	});
 	page("/course/:course/vocab_quizzes", function(e) {
 		models.Course.getById(e.params.course, function(err, doc) {
 			new ListQuizView(document.querySelector(".course"), {data: doc.vocabQuizzes, id:doc._id, section:"vocab_quizzes", title:"Vocabulary Quizzes"});
@@ -347,6 +410,19 @@ window.onload = function() {
 	page("/course/:course/vocab_quizzes/:quiz/edit", function(e) {
 		models.Course.getById(e.params.course, function(err, doc) {
 			new CreateVocabQuizView(document.querySelector(".course"), {id:doc._id, model:doc.vocabQuizzes[e.params.quiz]});
+		});
+	});
+	page("/course/:course/quizzes", function(e) {
+		models.Course.getById(e.params.course, function(err, doc) {
+			new ListQuizView(document.querySelector(".course"), {data: doc.quizzes, id:doc._id, section:"quizzes", title:"Quizzes"});
+		});
+	});
+	page("/course/:course/quizzes/create", function(e) {
+		models.Course.getById(e.params.course, function(err, doc) {
+			var m = new models.Quiz();
+			doc.quizzes.push(m);
+			m.questions.push(new models.Question());
+			new CreateQuiz(document.querySelector(".course"), {model:m, id:doc._id});
 		});
 	});
 	page();

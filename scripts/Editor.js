@@ -23,10 +23,6 @@ var EditorController = function(el) {
 	this.on("click .open-tab", this.openTab.bind(this)); // Open Tab
 	this.on("change:model", this.setupModel.bind(this));
 
-	this.on("render", function() {
-		console.log(this.el);
-	}.bind(this));
-
 	this.bind(".editor-rich", "data");
 	this.bind(".editor-mode", "type");
 	this.codebox = new CodeBox(CodeBox.Modes.LaTeX);
