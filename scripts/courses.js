@@ -175,7 +175,7 @@ util.inherits(ListQuizView, achilles.View);
 
 ListQuizView.prototype.templateSync = require("../views/listQuiz.mustache");
 
-function VocabQuestion(el) {
+function VocabQuestion() {
 	achilles.View.call(this, document.createElement("tr"));
 	this.bind(".question", "question");
 	this.bind(".answer", "answer");
@@ -273,7 +273,7 @@ VocabQuiz.prototype.revealAnswers = function() {
 VocabQuiz.prototype.reset = function() {
 		Array.prototype.slice.call(this.el.querySelectorAll("input")).forEach(function(el) {
 			el.value = "";
-			el.classList.remove("correct")
+			el.classList.remove("correct");
 			el.classList.remove("incorrect");
 			el.readOnly = false;
 		});
