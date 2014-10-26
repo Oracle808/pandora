@@ -1,6 +1,8 @@
 pandora
 =======
 
+![Screenshot](public/screenshot.png)
+
 The world's most advanced V.L.E. - Version 2.0
 
 Deployment
