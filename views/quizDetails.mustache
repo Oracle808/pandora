@@ -1,0 +1,56 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+  Quizzes
+    <div class="pull-right">
+      <a href="/course/{{id}}/quizzes">
+      <i class="fa fa-times"></i>
+      </a>
+    </div>
+  </div>
+  <div class="panel-body">
+    {{#model}}
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h1>{{title}}</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <a href="/course/{{id}}/quizzes/{{index}}/edit" class="btn btn-warning btn-sm">Edit</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          Total Questions: {{questions.length}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Previous Attempts</h3>
+          {{^attempts}}
+            You have not attempted this quiz yet.
+          {{/attempts}}
+          {{#attempts.length}}
+            <table class="table">
+              <tr>
+                <th>Previous Attempts</th>
+                <th>Score</th>
+              </tr>
+
+              {{#attempts}}
+                <tr>
+                  <td>{{date}}</td>
+                  <td>{{score}}</td>
+                  <td><a class="btn btn-info">Review</a></td>
+                </tr>
+              {{/attempts}}
+            </table>
+          {{/attempts.length}}
+       </div>
+       <div class="col-md-offset-5 col-md-2 text-center">
+         <a href="/course/{{id}}/quizzes/{{index}}/attempt" class="btn btn-success">Attempt Quiz</a>
+        </div>
+      </div>
+    {{/model}}
+  </div>
+</div>
