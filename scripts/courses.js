@@ -308,6 +308,7 @@ function CreateQuiz(el, options) {
 		}
 	});
 
+	this.bind(".title", "title");
 	this.model.on("remove:questions", this.render.bind(this));
 	this.on("click .submit", this.submit.bind(this));
 	this.on("click .question", this.showQuestion.bind(this));
@@ -346,6 +347,17 @@ CreateQuiz.prototype.submit = function() {
 		page("/course/" + this.id + "/quizzes");
 	}.bind(this));
 };
+
+function QuizDetails(el, options) {
+	achilles.View.call(this, el);
+
+	this.id = options.id;
+	this.model = options.model;
+}
+
+util.inherits(QuizDetails, achilles.View);
+
+QuizDetails.prototype.templateSync = require("../views/quizDetails.mustache");
 
 models.Course.connection = new achilles.Connection(window.location.protocol + "//" + window.location.host + "/courses");
 
@@ -423,6 +435,11 @@ window.onload = function() {
 			doc.quizzes.push(m);
 			m.questions.push(new models.Question());
 			new CreateQuiz(document.querySelector(".course"), {model:m, id:doc._id});
+		});
+	});
+	page("/course/:course/quizzes/:quiz", function(e) {
+		models.Course.getById(e.params.course, function(err, doc) {
+			new QuizDetails(document.querySelector(".course"), {model: doc.quizzes[e.params.quiz], id:doc._id});
 		});
 	});
 	page();

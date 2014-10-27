@@ -21,6 +21,7 @@ function QuizAttempt() {
 
 	this.ref("user", achilles.User);
 	this.define("question", [QuestionAttempt]);
+	this.define("date", Date);
 }
 
 util.inherits(QuizAttempt, achilles.Model);
